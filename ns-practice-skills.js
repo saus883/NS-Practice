@@ -53,8 +53,8 @@ function fractionSimplifying() {
       numerator = Math.floor(Math.random() * 199) + 1;
       denominator = Math.floor(Math.random() * 200) + 1;
     } else {
-      questionSelector = Math.random();
-      if (questionSelector < 0.5) {
+      let questionSelector2 = Math.random();
+      if (questionSelector2 < 0.5) {
         denominator = Math.floor(Math.random() * 990) + 1;
       } else {
         denominator = Math.floor(Math.random() * 999) + 1;
