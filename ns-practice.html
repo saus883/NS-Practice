@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NS Practice</title>
+
+    <link rel="stylesheet" href="ns-practice-styles.css">
+  </head>
+  <body>
+    <div class="left-panel">
+      <button class="left-panel-button" onclick="
+        togglePage('rp-welcome-page');
+        ">Home
+      </button>
+      <button class="left-panel-button" onclick="
+        togglePage('rp-skills-page');
+        ">Skills
+      </button>
+      <button class="left-panel-button">Tricks</button>
+    </div>
+    <div class="right-panel">
+      <!-- #region Broad Container Pages -->
+      <div class="rp-welcome-page page">
+        <p>Welcome</p>
+      </div>
+      <div class="rp-skills-page page hidden">
+        <p class="rp-skills-title">
+          Skills
+        </p>
+        <div class="rp-skills-buttons">
+          <div class="rp-skills-buttons-leftColumn">
+            <button class="rp-skills-buttons-style" onclick="togglePage('skills-fractionSimpl')">
+              Fraction Simplification
+            </button>
+          </div>
+          <div class="rp-skills-buttons-rightColumn">
+            <button class="rp-skills-buttons-style">
+              None
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion -->
+
+      <!-- #region Skills Individual Pages-->
+      <div class="skills-fractionSimpl hidden">
+        <p>Fraction Simplification</p>
+        <div class="fractionSimpl-generator-container">
+          <math>
+            <mfrac class="fractionSimpl-frac">
+              <mn class="fractionSimpl-ftop">1</mn>
+              <mi class="fractionSimpl-fbottom">2</mi>
+            </mfrac>
+          </math>
+        </div>
+        <input class="fractionSimpl-search-bar" placeholder="Enter">
+        <button class="fractionSimpl-start-button" onclick="
+          swapStartStop('fractionSimpl-start-button');
+          fractionSimplifying();
+          ">Start
+        </button>
+        <p>Current Time</p>
+        <p>Prev Time</p>
+      </div>
+      <!-- #endregion -->
+    </div>
+
+
+    <script src="ns-practice-layout.js"></script>
+    <script src="ns-practice-skills.js"></script>
+  </body>
+</html>
