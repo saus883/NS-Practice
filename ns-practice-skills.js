@@ -55,9 +55,9 @@ function fractionSimplifying() {
     } else {
       let questionSelector2 = Math.random();
       if (questionSelector2 < 0.5) {
-        denominator = Math.floor(Math.random() * 990) + 1;
+        denominator = 990;
       } else {
-        denominator = Math.floor(Math.random() * 999) + 1;
+        denominator = 999;
       }
       numerator = Math.floor(Math.random() * 900) + 1;
     }
