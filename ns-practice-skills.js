@@ -45,13 +45,21 @@ function fractionSimplifying() {
     let numerator;
     let denominator;
 
-    if (questionSelector < 0.8) {
-      const commonNum = Math.floor(Math.random() * 12) + 1;
+    if (questionSelector < 0.7) {
+      const commonNum = Math.floor(Math.random() * 20) + 1;
       numerator = commonNum * (Math.floor(Math.random() * 10) + 1);
       denominator = commonNum * (Math.floor(Math.random() * 10) + 1);
+    } else if (questionSelector < 0.85) {
+      numerator = Math.floor(Math.random() * 199) + 1;
+      denominator = Math.floor(Math.random() * 200) + 1;
     } else {
-      numerator = Math.floor(Math.random() * 499) + 1;
-      denominator = Math.floor(Math.random() * 500) + 1;
+      questionSelector = Math.random();
+      if (questionSelector < 0.5) {
+        denominator = Math.floor(Math.random() * 990) + 1;
+      } else {
+        denominator = Math.floor(Math.random() * 999) + 1;
+      }
+      numerator = Math.floor(Math.random() * 900) + 1;
     }
 
     frac.children[0].textContent = numerator;
@@ -59,6 +67,10 @@ function fractionSimplifying() {
 
     [numerator, denominator] = simplify(numerator, denominator);
 
+    if (denominator === 1) {
+      return `${numerator}`;
+    }
+    
     return `${numerator}/${denominator}`;
   };
 

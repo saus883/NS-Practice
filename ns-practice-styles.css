@@ -25,12 +25,13 @@
   right: 0;
   left: 80px;
   bottom: auto;
-  background-color: pink;
 }
 
 .hidden {
   display: none;
 }
+
+
 
 /* #region Broad Container Pages*/
 .rp-welcome-page {
@@ -39,12 +40,9 @@
   font-size: 60px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
-
-  background-color: lightblue;
 }
 
 .rp-skills-page {
-  background-color: green;
   font-family: Arial, Helvetica, sans-serif;
 
   .rp-skills-title {
@@ -55,7 +53,6 @@
   }
 
   .rp-skills-buttons {
-    background-color: rgb(114, 255, 255);
     display: flex;
     justify-content: space-around;
     padding: 0 20px;
