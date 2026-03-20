@@ -15,7 +15,10 @@
         togglePage('rp-skills-page');
         ">Skills
       </button>
-      <button class="left-panel-button">Tricks</button>
+      <button class="left-panel-button" onclick="
+        togglePage('rp-tricks-page');
+        ">Tricks
+      </button>
     </div>
     <div class="right-panel">
       <!-- #region Broad Container Pages -->
@@ -35,6 +38,23 @@
           <div class="rp-skills-buttons-rightColumn">
             <button class="rp-skills-buttons-style">
               None
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="rp-tricks-page page hidden">
+        <p class="rp-tricks-title">
+          Tricks
+        </p>
+        <div class="rp-tricks-buttons">
+          <div class="rp-tricks-buttons-leftColumn">
+            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-cubicRootABC')">
+              Cubic Root ([a+b][b+c][c+a])
+            </button>
+          </div>
+          <div class="rp-tricks-buttons-rightColumn">
+            <button class="rp-tricks-buttons-style">
+              button2
             </button>
           </div>
         </div>
@@ -62,10 +82,24 @@
         <p>Prev Time</p>
       </div>
       <!-- #endregion -->
+
+      <!-- #region Tricks Individual Pages-->
+      <div class="tricks-cubicRootABC page hidden">
+        <p>Cubic Root ([a+b][b+c][c+a])</p>
+        <div class="cubicRootABC-generator-container"></div>
+        <input class="cubicRootABC-search-bar" placeholder="Enter">
+        <button class="cubicRootABC-start-button" onclick="
+          swapStartStop('cubicRootABC-start-button');
+          cubicRootABC();
+          ">Start
+        </button>
+      </div>
+      <!-- #endregion -->
     </div>
 
 
     <script src="ns-practice-layout.js"></script>
     <script src="ns-practice-skills.js"></script>
+    <script src="ns-practice-tricks.js"></script>
   </body>
 </html>

@@ -42,23 +42,23 @@
   font-weight: bold;
 }
 
-.rp-skills-page {
+.rp-skills-page, .rp-tricks-page {
   font-family: Arial, Helvetica, sans-serif;
 
-  .rp-skills-title {
+  .rp-skills-title, .rp-tricks-title {
     padding-top: 20px;
     text-align: center;
     font-size: 30px;
     
   }
 
-  .rp-skills-buttons {
+  .rp-skills-buttons, .rp-tricks-buttons {
     display: flex;
     justify-content: space-around;
     padding: 0 20px;
     padding-bottom: 20px;
 
-    .rp-skills-buttons-style {
+    .rp-skills-buttons-style, .rp-tricks-buttons-style {
       width: 180px;
       height: 40px;
       border-width: 0;
@@ -69,7 +69,7 @@
       margin: 10px;
     }
 
-    .rp-skills-buttons-style:hover {
+    .rp-skills-buttons-style:hover, .rp-tricks-buttons-style:hover {
       filter: brightness(95%);
     }
   }
@@ -95,5 +95,21 @@
 }
 /* #endregion */
 
+/* #region Tricks Individual Pages */
+.tricks-cubicRootABC {
+  text-align: center;
+  padding-top: 50px;
+  font-family: Arial, Helvetica, sans-serif;
 
+  .cubicRootABC.generator-container {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .cubicRootABC-search-bar {
+    display: inline;
+  }
+}
+/* #endregion */
 
