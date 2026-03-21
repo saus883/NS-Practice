@@ -106,7 +106,7 @@ function squaresCubes() {
   function makeQuestion() {
     const questionSelector = Math.random();
 
-    if (questionSelector < 0.5) {
+    if (questionSelector < 0.75) {
       const square = Math.floor(Math.random() * 60) + 1;
       generatorContainer.textContent = `${square}²`;
       return Math.pow(square, 2);
