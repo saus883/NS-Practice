@@ -76,20 +76,22 @@
 }
 /* #endregion */
 
+
+
 /* #region Skills Individual Pages */
-.skills-fractionSimpl {
+.skills-fractionSimpl, .skills-squaresCubes {
   text-align: center;
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .fractionSimpl-generator-container {
+  .fractionSimpl-generator-container, .squaresCubes-generator-container {
     font-size: 30px;
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
   }
 
-  .fractionSimpl-search-bar {
+  .fractionSimpl-search-bar, .squaresCubes-search-bar {
     display: inline;
   }
 }
@@ -101,8 +103,8 @@
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .cubicRootABC.generator-container {
-    font-size: 30px;
+  .cubicRootABC-generator-container {
+    font-size: 25px;
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
