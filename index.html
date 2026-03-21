@@ -36,8 +36,8 @@
             </button>
           </div>
           <div class="rp-skills-buttons-rightColumn">
-            <button class="rp-skills-buttons-style">
-              None
+            <button class="rp-skills-buttons-style" onclick="togglePage('skills-squaresCubes')">
+              Squares and Cubes
             </button>
           </div>
         </div>
@@ -80,6 +80,16 @@
         </button>
         <p>Current Time</p>
         <p>Prev Time</p>
+      </div>
+      <div class="skills-squaresCubes page hidden">
+        <p>Squares and Cubes</p>
+        <div class="squaresCubes-generator-container"></div>
+        <input class="squaresCubes-search-bar" placeholder="Enter">
+        <button class="squaresCubes-start-button" onclick="
+          swapStartStop('squaresCubes-start-button');
+          squaresCubes();
+          ">Start
+        </button>
       </div>
       <!-- #endregion -->
 

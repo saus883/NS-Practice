@@ -16,8 +16,8 @@ function simplify(numerator, denominator) {
   return [numerator / commonDivisor, denominator / commonDivisor];
 }
 
-let fractionSimplifyingInterval = null;
 
+let fractionSimplifyingInterval = null;
 function fractionSimplifying() {
   const startBtn = document.querySelector('.fractionSimpl-start-button');
   const frac = document.querySelector('.fractionSimpl-frac');
@@ -87,10 +87,41 @@ function fractionSimplifying() {
   fractionSimplifyingInterval = setInterval(checkAnswer, 200);
 }
 
-function test(){
-  if (document.querySelector('.fractionSimpl-start-button').textContent === 'Stop') {
-    const fraction = document.querySelector('.fractionSimpl-frac');
-    fraction.children[0].textContent = 2;
-    fraction.children[1].textContent = 2;
+let squaresCubesInterval = null;
+function squaresCubes() {
+  const startBtn = document.querySelector('.squaresCubes-start-button');
+  const generatorContainer = document.querySelector('.squaresCubes-generator-container');
+  const searchBar = document.querySelector('.squaresCubes-search-bar');
+
+  if (startBtn.textContent !== 'Stop') {
+    if (squaresCubesInterval) {
+      clearInterval(squaresCubesInterval);
+      squaresCubesInterval = null;
+    }
+    generatorContainer.textContent = '';
+    searchBar.value = '';
+    return;
   }
+
+  function makeQuestion() {
+    const questionSelector = Math.random();
+
+    if (questionSelector < 0.5) {
+      const square = Math.floor(Math.random() * 60) + 1;
+      generatorContainer.textContent = `${square}²`;
+      return Math.pow(square, 2);
+    } else {
+      const cube = Math.floor(Math.random() * 20) + 1;
+      generatorContainer.textContent = `${cube}³`;
+      return Math.pow(cube, 3);
+    }
+  }
+  let answer = makeQuestion();
+
+  squaresCubesInterval = setInterval(() => {
+    if (searchBar.value.trim() === answer.toString()) {
+      searchBar.value = '';
+      answer = makeQuestion();
+    }
+  }, 200);
 }

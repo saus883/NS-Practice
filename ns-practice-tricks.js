@@ -44,7 +44,6 @@ function cubicRootABC() {
   };
 
   let answer = makeQuestion();
-  console.log(answer);
 
   cubicRootInterval = setInterval(() => {
     if (userInput.value === answer.toString()) {
