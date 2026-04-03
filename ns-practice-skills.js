@@ -125,3 +125,68 @@ function squaresCubes() {
     }
   }, 200);
 }
+
+let decimalToFractionInterval = null;
+function decimalToFraction() {
+  const startBtn = document.querySelector('.decimalToFraction-start-button');
+  const generatorContainer = document.querySelector('.decimalToFraction-generator-container');
+  const searchBar = document.querySelector('.decimalToFraction-search-bar');
+
+  if (startBtn.textContent !== 'Stop') {
+    if (decimalToFractionInterval) {
+      clearInterval(decimalToFractionInterval);
+      decimalToFractionInterval = null;
+    }
+    generatorContainer.textContent = '';
+    searchBar.value = '';
+    return;
+  }
+
+  function makeQuestion() {
+    const questionSelector = Math.random();
+    let denominator;
+    let numerator;
+
+    if (questionSelector < 0.1) {
+      denominator = 6;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.2) {
+      denominator = 7;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.3) {
+      denominator = 8;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.4) {
+      denominator = 9;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.5) {
+      denominator = 11;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.6) {
+      denominator = 12;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.7) {
+      denominator = 15;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    } else if (questionSelector < 0.8) {
+      denominator = 16;
+      numerator = Math.floor(Math.random() * (denominator - 1)) + 1;
+    }
+    
+    [numerator, denominator] = simplify(numerator, denominator);
+    const decimal = Math.trunc((numerator / denominator) * Math.pow(10, 6)) / Math.pow(10, 6);
+    generatorContainer.textContent = decimal.toString();
+    
+    return `${numerator}/${denominator}`;
+  }
+  let expectedAnswer = makeQuestion();
+
+  const checkAnswer = () => {
+    const input = searchBar.value.trim();
+    if (input === expectedAnswer) {
+      searchBar.value = '';
+      expectedAnswer = makeQuestion();
+    }
+  };
+  decimalToFractionInterval = setInterval(checkAnswer, 200);
+}
