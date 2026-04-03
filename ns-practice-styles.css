@@ -84,31 +84,31 @@
 
 
 /* #region Skills Individual Pages */
-.skills-fractionSimpl, .skills-squaresCubes, .skills-decimalToFraction {
+.skillPage {
   text-align: center;
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .fractionSimpl-generator-container, .squaresCubes-generator-container, .decimalToFraction-generator-container {
+  .skill-generator-container {
     font-size: 30px;
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
   }
 
-  .fractionSimpl-search-bar, .squaresCubes-search-bar, .decimalToFraction-search-bar {
+  .skill-search-bar {
     display: inline;
   }
 }
 /* #endregion */
 
 /* #region Tricks Individual Pages */
-.tricks-cubicRootABC, .tricks-determinant3x3 {
+.trickPage {
   text-align: center;
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .cubicRootABC-generator-container, .determinant3x3-generator-container {
+  .trick-generator-container {
     font-size: 25px;
     display: flex;
     justify-content: center;
@@ -118,7 +118,7 @@
       flex-direction: column;
     }
   }
-  .cubicRootABC-search-bar, .determinant3x3-search-bar {
+  .trick-search-bar {
     display: inline;
   }
 }
