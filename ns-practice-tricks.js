@@ -52,3 +52,50 @@ function cubicRootABC() {
     }
   }, 200);
 }
+
+let determinant3x3Interval = null;
+function determinant3x3() {
+  let problemContainer = document.querySelector('.determinant3x3-generator-container');
+  const startBtn = document.querySelector('.determinant3x3-start-button');
+  const userInput = document.querySelector('.determinant3x3-search-bar');
+
+  if (startBtn.textContent !== 'Stop') {
+    if (determinant3x3Interval) {
+      clearInterval(determinant3x3Interval);
+      determinant3x3Interval = null;
+    }
+    problemContainer.innerHTML = '';
+    userInput.value = '';
+    return;
+  }
+  
+  function makeQuestion() {
+    const matrix = [];
+    for (let i = 0; i < 3; i++) {
+      const row = [];
+      for (let j = 0; j < 3; j++) {
+        row.push(Math.floor(Math.random() * 10) + 1);
+      }
+      matrix.push(row);
+    }
+    problemContainer.innerHTML = 
+    `<pre>
+Find the determinant of the following matrix:
+${matrix[0][0]} ${matrix[0][1]} ${matrix[0][2]}
+${matrix[1][0]} ${matrix[1][1]} ${matrix[1][2]}
+${matrix[2][0]} ${matrix[2][1]} ${matrix[2][2]}
+    </pre>`;
+    const determinant = matrix[0][0] * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) - matrix[0][1] * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0]) +
+      matrix[0][2] * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0]);
+    return determinant;
+  }
+
+  let answer = makeQuestion();
+
+  determinant3x3Interval = setInterval(() => {
+    if (userInput.value === answer.toString()) {
+      userInput.value = '';
+      answer = makeQuestion();
+    }
+  }, 200);
+}

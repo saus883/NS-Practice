@@ -34,6 +34,9 @@
             <button class="rp-skills-buttons-style" onclick="togglePage('skills-fractionSimpl')">
               Fraction Simplification
             </button>
+            <button class="rp-skills-buttons-style" onclick="togglePage('skills-decimalToFraction')">
+              Decimal to Fraction
+            </button>
           </div>
           <div class="rp-skills-buttons-rightColumn">
             <button class="rp-skills-buttons-style" onclick="togglePage('skills-squaresCubes')">
@@ -53,8 +56,8 @@
             </button>
           </div>
           <div class="rp-tricks-buttons-rightColumn">
-            <button class="rp-tricks-buttons-style">
-              button2
+            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-determinant3x3')">
+              Determinant of 3x3 Matrix
             </button>
           </div>
         </div>
@@ -91,6 +94,16 @@
           ">Start
         </button>
       </div>
+      <div class="skills-decimalToFraction page hidden">
+        <p>Decimal to Fraction</p>
+        <div class="decimalToFraction-generator-container"></div>
+        <input class="decimalToFraction-search-bar" placeholder="Enter">
+        <button class="decimalToFraction-start-button" onclick="
+          swapStartStop('decimalToFraction-start-button');
+          decimalToFraction();
+          ">Start
+        </button>
+      </div>
       <!-- #endregion -->
 
       <!-- #region Tricks Individual Pages-->
@@ -101,6 +114,16 @@
         <button class="cubicRootABC-start-button" onclick="
           swapStartStop('cubicRootABC-start-button');
           cubicRootABC();
+          ">Start
+        </button>
+      </div>
+      <div class="tricks-determinant3x3 page hidden">
+        <p>Determinant of 3x3 Matrix</p>
+        <div class="determinant3x3-generator-container"></div>
+        <input class="determinant3x3-search-bar" placeholder="Enter">
+        <button class="determinant3x3-start-button" onclick="
+          swapStartStop('determinant3x3-start-button');
+          determinant3x3();
           ">Start
         </button>
       </div>

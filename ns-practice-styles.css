@@ -69,6 +69,11 @@
       margin: 10px;
     }
 
+    .rp-skills-buttons-leftColumn, .rp-skills-buttons-rightColumn, .rp-tricks-buttons-leftColumn, .rp-tricks-buttons-rightColumn {
+      display: flex;
+      flex-direction: column;
+    }
+
     .rp-skills-buttons-style:hover, .rp-tricks-buttons-style:hover {
       filter: brightness(95%);
     }
@@ -79,37 +84,41 @@
 
 
 /* #region Skills Individual Pages */
-.skills-fractionSimpl, .skills-squaresCubes {
+.skills-fractionSimpl, .skills-squaresCubes, .skills-decimalToFraction {
   text-align: center;
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .fractionSimpl-generator-container, .squaresCubes-generator-container {
+  .fractionSimpl-generator-container, .squaresCubes-generator-container, .decimalToFraction-generator-container {
     font-size: 30px;
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
   }
 
-  .fractionSimpl-search-bar, .squaresCubes-search-bar {
+  .fractionSimpl-search-bar, .squaresCubes-search-bar, .decimalToFraction-search-bar {
     display: inline;
   }
 }
 /* #endregion */
 
 /* #region Tricks Individual Pages */
-.tricks-cubicRootABC {
+.tricks-cubicRootABC, .tricks-determinant3x3 {
   text-align: center;
   padding-top: 50px;
   font-family: Arial, Helvetica, sans-serif;
 
-  .cubicRootABC-generator-container {
+  .cubicRootABC-generator-container, .determinant3x3-generator-container {
     font-size: 25px;
     display: flex;
     justify-content: center;
     margin-bottom: 16px;
+
+    .determinant3x3-generator-container {
+      flex-direction: column;
+    }
   }
-  .cubicRootABC-search-bar {
+  .cubicRootABC-search-bar, .determinant3x3-search-bar {
     display: inline;
   }
 }
