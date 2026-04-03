@@ -54,6 +54,9 @@
             <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-cubicRootABC')">
               Cubic Root ([a+b][b+c][c+a])
             </button>
+            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-doubleIntegralAddSubtract')">
+              Double Integral Add/Subtract
+            </button>
           </div>
           <div class="rp-tricks-buttons-rightColumn">
             <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-determinant3x3')">
@@ -65,9 +68,9 @@
       <!-- #endregion -->
 
       <!-- #region Skills Individual Pages-->
-      <div class="skills-fractionSimpl page hidden">
+      <div class="skillPage skills-fractionSimpl page hidden">
         <p>Fraction Simplification</p>
-        <div class="fractionSimpl-generator-container">
+        <div class="skill-generator-container fractionSimpl-generator-container">
           <math>
             <mfrac class="fractionSimpl-frac">
               <mn class="fractionSimpl-ftop"></mn>
@@ -75,30 +78,28 @@
             </mfrac>
           </math>
         </div>
-        <input class="fractionSimpl-search-bar" placeholder="Enter">
-        <button class="fractionSimpl-start-button" onclick="
+        <input class="skill-search-bar fractionSimpl-search-bar" placeholder="Enter">
+        <button class="skill-start-button fractionSimpl-start-button" onclick="
           swapStartStop('fractionSimpl-start-button');
           fractionSimplifying();
           ">Start
         </button>
-        <p>Current Time</p>
-        <p>Prev Time</p>
       </div>
-      <div class="skills-squaresCubes page hidden">
+      <div class="skillPage skills-squaresCubes page hidden">
         <p>Squares and Cubes</p>
-        <div class="squaresCubes-generator-container"></div>
-        <input class="squaresCubes-search-bar" placeholder="Enter">
-        <button class="squaresCubes-start-button" onclick="
+        <div class="skill-generator-container squaresCubes-generator-container"></div>
+        <input class="skill-search-bar squaresCubes-search-bar" placeholder="Enter">
+        <button class="skill-start-button squaresCubes-start-button" onclick="
           swapStartStop('squaresCubes-start-button');
           squaresCubes();
           ">Start
         </button>
       </div>
-      <div class="skills-decimalToFraction page hidden">
+      <div class="skillPage skills-decimalToFraction page hidden">
         <p>Decimal to Fraction</p>
-        <div class="decimalToFraction-generator-container"></div>
-        <input class="decimalToFraction-search-bar" placeholder="Enter">
-        <button class="decimalToFraction-start-button" onclick="
+        <div class="skill-generator-container decimalToFraction-generator-container"></div>
+        <input class="skill-search-bar decimalToFraction-search-bar" placeholder="Enter">
+        <button class="skill-start-button decimalToFraction-start-button" onclick="
           swapStartStop('decimalToFraction-start-button');
           decimalToFraction();
           ">Start
@@ -107,23 +108,33 @@
       <!-- #endregion -->
 
       <!-- #region Tricks Individual Pages-->
-      <div class="tricks-cubicRootABC page hidden">
+      <div class="trickPage tricks-cubicRootABC page hidden">
         <p>Cubic Root ([a+b][b+c][c+a])</p>
-        <div class="cubicRootABC-generator-container"></div>
-        <input class="cubicRootABC-search-bar" placeholder="Enter">
-        <button class="cubicRootABC-start-button" onclick="
+        <div class="trick-generator-container cubicRootABC-generator-container"></div>
+        <input class="trick-search-bar cubicRootABC-search-bar" placeholder="Enter">
+        <button class="trick-start-button cubicRootABC-start-button" onclick="
           swapStartStop('cubicRootABC-start-button');
           cubicRootABC();
           ">Start
         </button>
       </div>
-      <div class="tricks-determinant3x3 page hidden">
+      <div class="trickPage tricks-determinant3x3 page hidden">
         <p>Determinant of 3x3 Matrix</p>
-        <div class="determinant3x3-generator-container"></div>
-        <input class="determinant3x3-search-bar" placeholder="Enter">
-        <button class="determinant3x3-start-button" onclick="
+        <div class="trick-generator-container determinant3x3-generator-container"></div>
+        <input class="trick-search-bar determinant3x3-search-bar" placeholder="Enter">
+        <button class="trick-start-button determinant3x3-start-button" onclick="
           swapStartStop('determinant3x3-start-button');
           determinant3x3();
+          ">Start
+        </button>
+      </div>
+      <div class="trickPage tricks-doubleIntegralAddSubtract page hidden">
+        <p>Double Integral Add/Subtract</p>
+        <div class="trick-generator-container doubleIntegralAddSubtract-generator-container"></div>
+        <input class="trick-search-bar doubleIntegralAddSubtract-search-bar" placeholder="Enter">
+        <button class="trick-start-button doubleIntegralAddSubtract-start-button" onclick="
+          swapStartStop('doubleIntegralAddSubtract-start-button');
+          doubleIntegralAddSubtract();
           ">Start
         </button>
       </div>
