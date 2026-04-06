@@ -184,7 +184,7 @@ function q9(problemContainer) {
   const remainder = dividend % divisor;
   problemContainer.innerHTML = `<p>(9) ${dividend} &divide ${divisor} = _____ (mixed number)</p>`;
   [num, den] = simplify(remainder, divisor);
-  return `${Math.floor(dividend / divisor)} ${num}/${den}`;
+  return `${Math.floor(dividend / divisor)}` + (dividend % divisor === 0 ? '' : ` ${num}/${den}`);
 }
 
 function q10(problemContainer) {
