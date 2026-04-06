@@ -1,11 +1,3 @@
-function swapStartStop(buttonName) {
-  if (document.querySelector(`.${buttonName}`).innerText === 'Start') {
-    document.querySelector(`.${buttonName}`).innerText = 'Stop';
-  } else {
-    document.querySelector(`.${buttonName}`).innerText = 'Start';
-  }
-}
-
 function gcd(a, b) {
   return b === 0 ? a : gcd(b, a % b);
 }
