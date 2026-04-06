@@ -19,6 +19,10 @@
         togglePage('rp-tricks-page');
         ">Tricks
       </button>
+      <button class="left-panel-button" onclick="
+        togglePage('rp-test-page');
+        ">Test
+      </button>
     </div>
     <div class="right-panel">
       <!-- #region Broad Container Pages -->
@@ -64,6 +68,22 @@
             </button>
           </div>
         </div>
+      </div>
+      <div class="rp-test-page page hidden">
+        <p class="rp-test-title">Test</p>
+        <div class="rp-test-buttons">
+          <div class="rp-test-buttons-leftColumn">
+            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-1-10')">
+              Questions 1-10
+            </button>
+          </div>
+          <div class="rp-test-buttons-rightColumn">
+            <button class="rp-test-buttons-style" onclick="">
+              Questions 11-20
+            </button>
+          </div>
+        </div>
+        
       </div>
       <!-- #endregion -->
 
@@ -139,11 +159,26 @@
         </button>
       </div>
       <!-- #endregion -->
+      <!-- #region Test Individual Pages -->
+      <div class="testPage tests-questions-1-10 page hidden">
+        <p>Questions 1-10</p>
+        <div class="test-generator-container questions-1-10-generator-container"></div>
+        <input class="test-search-bar questions-1-10-search-bar" placeholder="Enter">
+        <button class="test-start-button questions-1-10-start-button" onclick="
+          swapStartStop('questions-1-10-start-button');
+          testMaker(1, 10, 'questions-1-10-generator-container', 'questions-1-10-search-bar', 'questions-1-10-start-button');
+          ">Start
+      </div>
+      <div class="testPage tests-questions-11-20 page hidden">
+        <p>Questions 11-20</p>
+      </div>
+      <!-- #endregion -->
     </div>
 
 
     <script src="ns-practice-layout.js"></script>
     <script src="ns-practice-skills.js"></script>
     <script src="ns-practice-tricks.js"></script>
+    <script src="ns-practice-test.js"></script>
   </body>
 </html>
