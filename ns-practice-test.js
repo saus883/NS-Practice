@@ -1,5 +1,15 @@
 const functionArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
 
+function getEstimateRange(answer) {
+  let array = [];
+  let lower = answer < 0? Math.round(answer * 1.05) : Math.round(answer * 0.95);
+  let upper = answer < 0? Math.round(answer * 0.95) : Math.round(answer * 1.05);
+  for (let i = lower; i <= upper; i++) {
+    array.push(i.toString());
+  }
+  return array;
+}
+
 let testMakerInterval = null;
 function testMaker(min, max, generator, search_bar, start_button) {
   let problemContainer = document.querySelector('.' + generator);
@@ -36,8 +46,16 @@ function testMaker(min, max, generator, search_bar, start_button) {
         testMakerInterval = null;
         return;
       }
-
-      if (userInput.value === answer.toString()) {
+      const inputValue = userInput.value.trim();
+      if (Array.isArray(answer)) {
+        const answers = answer.map((item) => item.toString());
+        if (answers.includes(inputValue)) {
+          userInput.value = '';
+          clearInterval(testMakerInterval);
+          currentIndex += 1;
+          askNextQuestion();
+        }
+      } else if (inputValue === answer.toString()) {
         userInput.value = '';
         clearInterval(testMakerInterval);
         currentIndex += 1;
@@ -53,14 +71,14 @@ function testMaker(min, max, generator, search_bar, start_button) {
 function q1(problemContainer) {
   const sign = Math.random() < 0.5 ? '+' : '-';
   if (Math.random() < 0.5) {
-    const a = Math.floor(Math.random() * 50000) + 500;
-    const b = Math.floor(Math.random() * 50000) + 500;
+    const a = Math.floor(Math.random() * 25000) + 500;
+    const b = Math.floor(Math.random() * 25000) + 500;
     problemContainer.innerHTML = `<p>(1) ${a} ${sign} ${b}</p>`;
     return sign === '+' ? a + b : a - b;
   } else {
-    const a = Math.floor(Math.random() * 40000) + 500;
-    const b = Math.floor(Math.random() * 40000) + 500;
-    const c = Math.floor(Math.random() * 40000) + 500;
+    const a = Math.floor(Math.random() * 5000) + 500;
+    const b = Math.floor(Math.random() * 5000) + 500;
+    const c = Math.floor(Math.random() * 5000) + 500;
     problemContainer.innerHTML = `<p>(1) ${a} ${sign} ${b} + ${c}</p>`;
     return sign === '+' ? a + b + c : a - b + c;
   }
@@ -189,10 +207,10 @@ function q9(problemContainer) {
 
 function q10(problemContainer) {
   const max = Math.floor(Math.random() * 100000) + 5000;
-  const a = Math.floor(Math.random() * (4 / 5) * max) + (1 / 5) * max;
-  const b = Math.floor(Math.random() * (4 / 5) * max) + (1 / 5) * max;
-  const c = Math.floor(Math.random() * (4 / 5) * max) + (1 / 5) * max;
-  const d = Math.floor(Math.random() * (4 / 5) * max) + (1 / 5) * max;
+  const a = Math.floor(Math.random() * Math.round((4 / 5) * max)) + Math.round((1 / 5) * max);
+  const b = Math.floor(Math.random() * Math.round((4 / 5) * max)) + Math.round((1 / 5) * max);
+  const c = Math.floor(Math.random() * Math.round((4 / 5) * max)) + Math.round((1 / 5) * max);
+  const d = Math.floor(Math.random() * Math.round((4 / 5) * max)) + Math.round((1 / 5) * max);
   const array = [a, b, c, d];
   const operators = [];
 
@@ -213,6 +231,6 @@ function q10(problemContainer) {
     sum += operators[i - 1] === '+' ? array[i] : -array[i];
   }
 
-  problemContainer.innerHTML = `<p>(10) ${message} = _____</p>`;
-  return sum;
+  problemContainer.innerHTML = `<p>*(10) ${message} = _____</p>`;
+  return getEstimateRange(sum);
 }
