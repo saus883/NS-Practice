@@ -182,3 +182,40 @@ function decimalToFraction() {
   };
   decimalToFractionInterval = setInterval(checkAnswer, 200);
 }
+
+let arithmeticManyNumbersInterval = null;
+function arithmeticManyNumbers() {
+  const startBtn = document.querySelector('.arithmeticManyNumbers-start-button');
+  const problemContainer = document.querySelector('.arithmeticManyNumbers-generator-container');
+  const userInput = document.querySelector('.arithmeticManyNumbers-search-bar');
+
+  if (startBtn.textContent !== 'Stop') {
+    if (arithmeticManyNumbersInterval) {
+      clearInterval(arithmeticManyNumbersInterval);
+      arithmeticManyNumbersInterval = null;
+      problemContainer.textContent = '';
+      userInput.value = '';
+    }
+  }
+
+  function makeQuestion() {
+    let array = [];
+    for (let i = 0; i < 6; i++) {
+      array.push(Math.floor(Math.random() * 50) + 1);
+    }
+    let arrayOp = [];
+    for (let i = 0; i < 5; i++) {
+      arrayOp.push(Math.random() < 0.5 ? '+' : '-');
+    }
+
+    for (let i = 0; i < 5; i++) {
+      if (arrayOp[i] === '+') {
+        if (i === 0) {
+          problemContainer.innerHTML += `<p>${array[0]}</p>`;
+        } else {
+          problemContainer.innerHTML += `<p> + ${array[i]}</p>`;
+        }
+      }
+    }
+  }
+}

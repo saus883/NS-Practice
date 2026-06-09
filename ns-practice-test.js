@@ -10,6 +10,72 @@ function getEstimateRange(answer) {
   return array;
 }
 
+const combosArray = [q1, q2, q3, q5, q6, q8];
+questionCombosInterval = null;
+function questionCombos() {
+  const comboContainer = document.querySelector('.question-Combos-generator-container');
+  const startBtn = document.querySelector('.question-Combos-start-button');
+  const userInput = document.querySelector('.question-Combos-search-bar');
+
+  if (!comboContainer || !startBtn || !userInput) {
+    return;
+  }
+
+  if (startBtn.textContent !== 'Stop') {
+    if (questionCombosInterval) {
+      clearInterval(questionCombosInterval);
+      questionCombosInterval = null;
+    }
+    comboContainer.innerHTML = '';
+    userInput.value = '';
+    return;
+  }
+
+  comboContainer.innerHTML = '';
+  userInput.value = '';
+
+  function renderQuestion(questionFn) {
+    const temp = document.createElement('div');
+    const answer = questionFn(temp);
+    let text = temp.textContent || '';
+    text = text
+      .replace(/^\s*\(?\d+\)?[.)]?\s*/, '')
+      .replace(/_+/g, '')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+    return { text, answer };
+  }
+
+  function makeQuestion() {
+    const first = renderQuestion(combosArray[Math.floor(Math.random() * combosArray.length)]);
+    const operator = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
+    const second = renderQuestion(combosArray[Math.floor(Math.random() * combosArray.length)]);
+
+    comboContainer.innerHTML = `
+      <p>(${first.text})</p>
+      <p> ${operator} </p>
+      <p>(${second.text})</p>
+    `;
+
+    const op = {
+      "+" : (x, y) => x + y,
+      "-" : (x, y) => x - y,
+      "*" : (x, y) => x * y,
+      "/" : (x, y) => x / y
+    };
+    return op[operator](parseFloat(first.answer), parseFloat(second.answer));
+  }
+  let answer = makeQuestion();
+
+  questionCombosInterval = setInterval(() => {
+    if (userInput.value.trim() === answer.toString()) {
+      userInput.value = '';
+      comboContainer.innerHTML = '';
+      answer = makeQuestion();
+    }
+  }, 200);
+}
+
 let testMakerInterval = null;
 function testMaker(min, max, generator, search_bar, start_button) {
   let problemContainer = document.querySelector('.' + generator);
@@ -73,13 +139,13 @@ function q1(problemContainer) {
   if (Math.random() < 0.5) {
     const a = Math.floor(Math.random() * 25000) + 500;
     const b = Math.floor(Math.random() * 25000) + 500;
-    problemContainer.innerHTML = `<p>(1) ${a} ${sign} ${b}</p>`;
+    problemContainer.innerHTML += `<p>(1) ${a} ${sign} ${b}</p>`;
     return sign === '+' ? a + b : a - b;
   } else {
     const a = Math.floor(Math.random() * 5000) + 500;
     const b = Math.floor(Math.random() * 5000) + 500;
     const c = Math.floor(Math.random() * 5000) + 500;
-    problemContainer.innerHTML = `<p>(1) ${a} ${sign} ${b} + ${c}</p>`;
+    problemContainer.innerHTML += `<p>(1) ${a} ${sign} ${b} + ${c}</p>`;
     return sign === '+' ? a + b + c : a - b + c;
   }
 }
@@ -87,7 +153,7 @@ function q1(problemContainer) {
 function q2(problemContainer) {
   const a = Math.floor(Math.random() * 2000) + 1000;
   const b = Math.floor(Math.random() * 1500) + 100;
-  problemContainer.innerHTML = `<p>(2) ${a} - ${b}</p>`;
+  problemContainer.innerHTML += `<p>(2) ${a} - ${b}</p>`;
   return a - b;
 }
 
@@ -97,11 +163,11 @@ function q3(problemContainer) {
   const product = a * b;
   
   if (Math.random() < 0.5) {
-    problemContainer.innerHTML = `<p>(3) ${product} &#247 ${a}</p>`;
+    problemContainer.innerHTML += `<p>(3) ${product} &#247 ${a}</p>`;
     return b;
   } else {
     const randomNum = Math.floor(Math.random() * 12) + 1
-    problemContainer.innerHTML = `<p>(3) ${product} &times <sup>${randomNum}</sup>&frasl;<sub>${a}</sub></p>`;
+    problemContainer.innerHTML += `<p>(3) ${product} &times <sup>${randomNum}</sup>&frasl;<sub>${a}</sub></p>`;
     return product * randomNum / a;
   }
 }
@@ -112,11 +178,11 @@ function q4(problemContainer) {
   [num, den] = simplify(b, a);
 
   if (Math.random() < 0.5) {
-    problemContainer.innerHTML = `<p>(4) ${num}/${den} = _____ % (decimal) </p>`;
+    problemContainer.innerHTML += `<p>(4) ${num}/${den} = _____ % (decimal) </p>`;
     let answer = (num / den) * 100;
     return answer.toString().replace(/^0+/, '');
   } else {
-    problemContainer.innerHTML = `<p>(4) ${num}/${den} % = _____ (decimal) </p>`;
+    problemContainer.innerHTML += `<p>(4) ${num}/${den} % = _____ (decimal) </p>`;
     let answer = (num / den) / 100;
     return answer.toString().replace(/^0+/, '');;
   }
@@ -131,7 +197,7 @@ function q5(problemContainer) {
     a += rand;
     b += rand;
     sign = Math.random() < 0.5 ? '+' : '-';
-    problemContainer.innerHTML = sign === '+' ? `<p>(5) ${c} &times ${a} + ${b} &times ${c}</p>` : `<p>(5) ${c} &times ${b} - ${a} &times ${c}</p>`;
+    problemContainer.innerHTML += sign === '+' ? `<p>(5) ${c} &times ${a} + ${b} &times ${c}</p>` : `<p>(5) ${c} &times ${b} - ${a} &times ${c}</p>`;
     if (sign === '+') {
       return c * a + b * c;
     } else {
@@ -147,11 +213,11 @@ function q5(problemContainer) {
     }
     
     if (Math.random() < 0.5) {
-      problemContainer.innerHTML = `<p>5. The sum of proper divisors of ${int} is _____</p>`;
+      problemContainer.innerHTML += `<p>(5) The sum of proper divisors of ${int} is _____</p>`;
       sum -= int;
       return sum;
     } else {
-      problemContainer.innerHTML = `<p>5. The sum of the divisors of ${int} is _____</p>`;
+      problemContainer.innerHTML += `<p>(5) The sum of the divisors of ${int} is _____</p>`;
       return sum;
     }
   }
@@ -160,7 +226,7 @@ function q5(problemContainer) {
 function q6(problemContainer) {
   let divisor = [3, 4, 6, 8, 9][Math.floor(Math.random() * 5)];
   let dividend = Math.floor(Math.random() * 10000) + 1000;
-  problemContainer.innerHTML = `<p>(6) ${dividend} &divide ${divisor} has a remainder of ______</p>`;
+  problemContainer.innerHTML += `<p>(6) ${dividend} &divide ${divisor} has a remainder of ______</p>`;
   return dividend % divisor;
 }
 
@@ -177,7 +243,7 @@ function q7(problemContainer) {
     message += array[i] + ' + ';
   }
   message += array[array.length - 1] + ' = _____';
-  problemContainer.innerHTML = `<p>(7) ${message}</p>`;
+  problemContainer.innerHTML += `<p>(7) ${message}</p>`;
   return array.reduce((a, b) => a + b, 0);
 }
 
@@ -189,7 +255,7 @@ function q8(problemContainer) {
       product *= i;
     }
   }
-  problemContainer.innerHTML = Math.random() < 0.5 ? `<p>(8) The product of the positive divisors of ${num} is _____</p>` : `<p>(8) The product of the proper divisors of ${num} is _____</p>`;
+  problemContainer.innerHTML += Math.random() < 0.5 ? `<p>(8) The product of the positive divisors of ${num} is _____</p>` : `<p>(8) The product of the proper divisors of ${num} is _____</p>`;
   if (problemContainer.innerHTML.includes('proper')) {
     return product / num;
   }
@@ -200,7 +266,7 @@ function q9(problemContainer) {
   const dividend = Math.floor(Math.random() * 500) + 100;
   const divisor = Math.floor(Math.random() * 40) + 10;
   const remainder = dividend % divisor;
-  problemContainer.innerHTML = `<p>(9) ${dividend} &divide ${divisor} = _____ (mixed number)</p>`;
+  problemContainer.innerHTML += `<p>(9) ${dividend} &divide ${divisor} = _____ (mixed number)</p>`;
   [num, den] = simplify(remainder, divisor);
   return `${Math.floor(dividend / divisor)}` + (dividend % divisor === 0 ? '' : ` ${num}/${den}`);
 }
@@ -231,6 +297,6 @@ function q10(problemContainer) {
     sum += operators[i - 1] === '+' ? array[i] : -array[i];
   }
 
-  problemContainer.innerHTML = `<p>*(10) ${message} = _____</p>`;
+  problemContainer.innerHTML += `<p>*(10) ${message} = _____</p>`;
   return getEstimateRange(sum);
 }

@@ -46,6 +46,9 @@
             <button class="rp-skills-buttons-style" onclick="togglePage('skills-squaresCubes')">
               Squares and Cubes
             </button>
+            <button class="rp-skills-buttons-style" onclick="togglePage('skills-arithmeticManyNumbers')">
+              Arithmetic with many numbers
+            </button>
           </div>
         </div>
       </div>
@@ -73,13 +76,16 @@
         <p class="rp-test-title">Test</p>
         <div class="rp-test-buttons">
           <div class="rp-test-buttons-leftColumn">
-            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-1-10')">
-              Questions 1-10
+            <button class="rp-test-buttons-style" onclick="togglePage('question-Combos')">
+              Question Combos
+            </button>
+            <button class="rp-test-buttons-style" onclick="">
+              Questions 11-20
             </button>
           </div>
           <div class="rp-test-buttons-rightColumn">
-            <button class="rp-test-buttons-style" onclick="">
-              Questions 11-20
+            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-1-10')">
+              Questions 1-10
             </button>
           </div>
         </div>
@@ -126,6 +132,16 @@
           ">Start
         </button>
       </div>
+      <div class="skillPage skills-arithmeticManyNumbers page hidden">
+        <p>Arithmetic with many numbers</p>
+        <div class="skill-generator-container arithmeticManyNumbers-generator-container"></div>
+        <input class="skill-search-bar arithmeticManyNumbers-search-bar" placeholder="Enter">
+        <button class="skill-start-button arithmeticManyNumbers-start-button" onclick="
+          swapStartStop('arithmeticManyNumbers-start-button');
+          arithmeticManyNumbers();
+          ">Start
+        </button>
+      </div>
       <!-- #endregion -->
 
       <!-- #region Tricks Individual Pages-->
@@ -162,6 +178,15 @@
       <!-- #endregion -->
       
       <!-- #region Test Individual Pages -->
+      <div class="testPage question-Combos page hidden">
+        <p>Question Combos</p>
+        <div class="test-generator-container question-Combos-generator-container"></div>
+        <input class="test-search-bar question-Combos-search-bar" placeholder="Enter">
+        <button class="test-start-button question-Combos-start-button" onclick="
+          swapStartStop('question-Combos-start-button');
+          questionCombos();
+          ">Start
+      </div>
       <div class="testPage tests-questions-1-10 page hidden">
         <p>Questions 1-10</p>
         <div class="test-generator-container questions-1-10-generator-container"></div>
