@@ -1,28 +1,21 @@
-function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
+function toggleSkillPage(functionName, title) {
+  togglePage('skillPage');
+  document.querySelector('.skill-title').innerHTML = title;
+  document.querySelector('.skill-title').setAttribute('data-question', functionName);
 }
-
-function simplify(numerator, denominator) {
-  const commonDivisor = gcd(Math.abs(numerator), Math.abs(denominator));
-  
-  return [numerator / commonDivisor, denominator / commonDivisor];
-}
-
 
 let fractionSimplifyingInterval = null;
 function fractionSimplifying() {
-  const startBtn = document.querySelector('.fractionSimpl-start-button');
-  const frac = document.querySelector('.fractionSimpl-frac');
-  const searchBar = document.querySelector('.fractionSimpl-search-bar');
+  const startBtn = document.querySelector('.skill-start-button');
+  const generatorContainer = document.querySelector('.skill-generator-container');
+  const searchBar = document.querySelector('.skill-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (fractionSimplifyingInterval) {
       clearInterval(fractionSimplifyingInterval);
       fractionSimplifyingInterval = null;
     }
-
-    frac.children[0].textContent = '';
-    frac.children[1].textContent = '';
+    generatorContainer.innerHTML = '';
     searchBar.value = '';
     return;
   }
@@ -54,8 +47,8 @@ function fractionSimplifying() {
       numerator = Math.floor(Math.random() * 900) + 1;
     }
 
-    frac.children[0].textContent = numerator;
-    frac.children[1].textContent = denominator;
+    generatorContainer.innerHTML = `<p>\\(\\frac{${numerator}}{${denominator}}\\)</p>`;
+    MathJax.typeset();
 
     [numerator, denominator] = simplify(numerator, denominator);
 
@@ -81,9 +74,9 @@ function fractionSimplifying() {
 
 let squaresCubesInterval = null;
 function squaresCubes() {
-  const startBtn = document.querySelector('.squaresCubes-start-button');
-  const generatorContainer = document.querySelector('.squaresCubes-generator-container');
-  const searchBar = document.querySelector('.squaresCubes-search-bar');
+  const startBtn = document.querySelector('.skill-start-button');
+  const generatorContainer = document.querySelector('.skill-generator-container');
+  const searchBar = document.querySelector('.skill-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (squaresCubesInterval) {
@@ -120,9 +113,9 @@ function squaresCubes() {
 
 let decimalToFractionInterval = null;
 function decimalToFraction() {
-  const startBtn = document.querySelector('.decimalToFraction-start-button');
-  const generatorContainer = document.querySelector('.decimalToFraction-generator-container');
-  const searchBar = document.querySelector('.decimalToFraction-search-bar');
+  const startBtn = document.querySelector('.skill-start-button');
+  const generatorContainer = document.querySelector('.skill-generator-container');
+  const searchBar = document.querySelector('.skill-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (decimalToFractionInterval) {
@@ -183,19 +176,20 @@ function decimalToFraction() {
   decimalToFractionInterval = setInterval(checkAnswer, 200);
 }
 
-let arithmeticManyNumbersInterval = null;
-function arithmeticManyNumbers() {
-  const startBtn = document.querySelector('.arithmeticManyNumbers-start-button');
-  const problemContainer = document.querySelector('.arithmeticManyNumbers-generator-container');
-  const userInput = document.querySelector('.arithmeticManyNumbers-search-bar');
+let addSubtractManyNumbersInterval = null;
+function addSubtractManyNumbers() {
+  const startBtn = document.querySelector('.skill-start-button');
+  const problemContainer = document.querySelector('.skill-generator-container');
+  const userInput = document.querySelector('.skill-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
-    if (arithmeticManyNumbersInterval) {
-      clearInterval(arithmeticManyNumbersInterval);
-      arithmeticManyNumbersInterval = null;
-      problemContainer.textContent = '';
-      userInput.value = '';
+    if (addSubtractManyNumbersInterval) {
+      clearInterval(addSubtractManyNumbersInterval);
+      addSubtractManyNumbersInterval = null;
     }
+    problemContainer.textContent = '';
+    userInput.value = '';
+    return;
   }
 
   function makeQuestion() {
@@ -208,14 +202,25 @@ function arithmeticManyNumbers() {
       arrayOp.push(Math.random() < 0.5 ? '+' : '-');
     }
 
-    for (let i = 0; i < 5; i++) {
-      if (arrayOp[i] === '+') {
-        if (i === 0) {
-          problemContainer.innerHTML += `<p>${array[0]}</p>`;
-        } else {
-          problemContainer.innerHTML += `<p> + ${array[i]}</p>`;
-        }
+    sum = 0;
+    for (let i = 0; i < 6; i++) {
+      if (i === 0) {
+        problemContainer.innerHTML += `<p>${array[0]}</p>`;
+        sum += array[0];
+      } else {
+        problemContainer.innerHTML += `<p> ${arrayOp[i - 1]} ${array[i]}</p>`;
+        sum = arrayOp[i - 1] === '+' ? sum + array[i] : sum - array[i];
       }
     }
+    return sum;
   }
+  let answer = makeQuestion();
+
+  addSubtractManyNumbersInterval = setInterval(() => {
+    if (userInput.value.trim() === answer.toString()) {
+      userInput.value = '';
+      problemContainer.textContent = '';
+      answer = makeQuestion();
+    }
+  }, 200);
 }

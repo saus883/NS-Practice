@@ -1,20 +1,14 @@
-function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
+function toggleTrickPage(functionName, title) {
+  togglePage('trickPage');
+  document.querySelector('.trick-title').innerHTML = title;
+  document.querySelector('.trick-title').setAttribute('data-question', functionName);
 }
-
-function simplify(numerator, denominator) {
-  const commonDivisor = gcd(Math.abs(numerator), Math.abs(denominator));
-  
-  return [numerator / commonDivisor, denominator / commonDivisor];
-}
-
 
 let cubicRootInterval = null;
-
 function cubicRootABC() {
-  let problemContainer = document.querySelector('.cubicRootABC-generator-container');
-  const startBtn = document.querySelector('.cubicRootABC-start-button');
-  const userInput = document.querySelector('.cubicRootABC-search-bar');
+  let problemContainer = document.querySelector('.trick-generator-container');
+  const startBtn = document.querySelector('.trick-start-button');
+  const userInput = document.querySelector('.trick-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (cubicRootInterval) {
@@ -54,9 +48,9 @@ function cubicRootABC() {
 
 let determinant3x3Interval = null;
 function determinant3x3() {
-  let problemContainer = document.querySelector('.determinant3x3-generator-container');
-  const startBtn = document.querySelector('.determinant3x3-start-button');
-  const userInput = document.querySelector('.determinant3x3-search-bar');
+  let problemContainer = document.querySelector('.trick-generator-container');
+  const startBtn = document.querySelector('.trick-start-button');
+  const userInput = document.querySelector('.trick-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (determinant3x3Interval) {
@@ -105,9 +99,9 @@ ${matrix[2][0]} ${matrix[2][1]} ${matrix[2][2]}
 
 let doubleIntegralAddSubtractInterval = null;
 function doubleIntegralAddSubtract() {
-  let problemContainer = document.querySelector('.doubleIntegralAddSubtract-generator-container');
-  const startBtn = document.querySelector('.doubleIntegralAddSubtract-start-button');
-  const userInput = document.querySelector('.doubleIntegralAddSubtract-search-bar');
+  let problemContainer = document.querySelector('.trick-generator-container');
+  const startBtn = document.querySelector('.trick-start-button');
+  const userInput = document.querySelector('.trick-search-bar');
 
   if (startBtn.textContent !== 'Stop') {
     if (doubleIntegralAddSubtractInterval) {

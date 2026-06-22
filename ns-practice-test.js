@@ -1,4 +1,4 @@
-const functionArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10];
+const functionArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30];
 
 function getEstimateRange(answer) {
   let array = [];
@@ -10,70 +10,13 @@ function getEstimateRange(answer) {
   return array;
 }
 
-const combosArray = [q1, q2, q3, q5, q6, q8];
-questionCombosInterval = null;
-function questionCombos() {
-  const comboContainer = document.querySelector('.question-Combos-generator-container');
-  const startBtn = document.querySelector('.question-Combos-start-button');
-  const userInput = document.querySelector('.question-Combos-search-bar');
-
-  if (!comboContainer || !startBtn || !userInput) {
-    return;
+function testMakerCustom(min, max) {
+  togglePage('tests-questions-custom');
+  document.querySelector(".custom-test-title").textContent = `Custom Test: ${min} - ${max}`;
+  document.querySelector('.questions-custom-start-button').onclick = function() {
+    swapStartStop('questions-custom-start-button');
+    testMaker(min, max, 'questions-custom-generator-container', 'questions-custom-search-bar', 'questions-custom-start-button');
   }
-
-  if (startBtn.textContent !== 'Stop') {
-    if (questionCombosInterval) {
-      clearInterval(questionCombosInterval);
-      questionCombosInterval = null;
-    }
-    comboContainer.innerHTML = '';
-    userInput.value = '';
-    return;
-  }
-
-  comboContainer.innerHTML = '';
-  userInput.value = '';
-
-  function renderQuestion(questionFn) {
-    const temp = document.createElement('div');
-    const answer = questionFn(temp);
-    let text = temp.textContent || '';
-    text = text
-      .replace(/^\s*\(?\d+\)?[.)]?\s*/, '')
-      .replace(/_+/g, '')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
-    return { text, answer };
-  }
-
-  function makeQuestion() {
-    const first = renderQuestion(combosArray[Math.floor(Math.random() * combosArray.length)]);
-    const operator = ["+", "-", "*", "/"][Math.floor(Math.random() * 4)];
-    const second = renderQuestion(combosArray[Math.floor(Math.random() * combosArray.length)]);
-
-    comboContainer.innerHTML = `
-      <p>(${first.text})</p>
-      <p> ${operator} </p>
-      <p>(${second.text})</p>
-    `;
-
-    const op = {
-      "+" : (x, y) => x + y,
-      "-" : (x, y) => x - y,
-      "*" : (x, y) => x * y,
-      "/" : (x, y) => x / y
-    };
-    return op[operator](parseFloat(first.answer), parseFloat(second.answer));
-  }
-  let answer = makeQuestion();
-
-  questionCombosInterval = setInterval(() => {
-    if (userInput.value.trim() === answer.toString()) {
-      userInput.value = '';
-      comboContainer.innerHTML = '';
-      answer = makeQuestion();
-    }
-  }, 200);
 }
 
 let testMakerInterval = null;
@@ -137,14 +80,14 @@ function testMaker(min, max, generator, search_bar, start_button) {
 function q1(problemContainer) {
   const sign = Math.random() < 0.5 ? '+' : '-';
   if (Math.random() < 0.5) {
-    const a = Math.floor(Math.random() * 25000) + 500;
-    const b = Math.floor(Math.random() * 25000) + 500;
+    const a = Math.floor(Math.random() * 5000) + 200;
+    const b = Math.floor(Math.random() * 5000) + 200;
     problemContainer.innerHTML += `<p>(1) ${a} ${sign} ${b}</p>`;
     return sign === '+' ? a + b : a - b;
   } else {
-    const a = Math.floor(Math.random() * 5000) + 500;
-    const b = Math.floor(Math.random() * 5000) + 500;
-    const c = Math.floor(Math.random() * 5000) + 500;
+    const a = Math.floor(Math.random() * 2500) + 500;
+    const b = Math.floor(Math.random() * 2500) + 500;
+    const c = Math.floor(Math.random() * 2500) + 500;
     problemContainer.innerHTML += `<p>(1) ${a} ${sign} ${b} + ${c}</p>`;
     return sign === '+' ? a + b + c : a - b + c;
   }
@@ -268,7 +211,7 @@ function q9(problemContainer) {
   const remainder = dividend % divisor;
   problemContainer.innerHTML += `<p>(9) ${dividend} &divide ${divisor} = _____ (mixed number)</p>`;
   [num, den] = simplify(remainder, divisor);
-  return `${Math.floor(dividend / divisor)}` + (dividend % divisor === 0 ? '' : ` ${num}/${den}`);
+  return fracAnswer(dividend / divisor)
 }
 
 function q10(problemContainer) {
@@ -299,4 +242,339 @@ function q10(problemContainer) {
 
   problemContainer.innerHTML += `<p>*(10) ${message} = _____</p>`;
   return getEstimateRange(sum);
+}
+
+function q11(problemContainer) {
+  let factor = Math.floor(Math.random() * 8) + 2;
+  let num1 = factor * Math.floor(Math.random() * 8) + 2;
+  let num2 = factor * Math.floor(Math.random() * 8) + 2;
+
+  let gcd1 = gcd(num1, num2);
+  let lcm = (num1 * num2) / gcd1;
+  let sign = (Math.random() * 2 | 0) ? '+' : '-';
+  problemContainer.innerHTML += `<p>(11) The GCD(${num1}, ${num2}) ${sign} the LCM(${num1}, ${num2}) is _____</p>`;
+  return sign === '+' ? gcd1 + lcm : gcd1 - lcm;
+}
+
+function q12(problemContainer) {
+  let a = Math.floor(Math.random() * 10) + 11;
+  let b = Math.floor(Math.random() * 2 ) + a;
+  let c = Math.floor(Math.random() * 2 ) + b;
+
+  let wholeNumber = Math.floor((a * b) / c);
+  let numerator = (a * b) % c;
+  let denominator = c;
+  [numerator, denominator] = simplify(numerator, denominator);
+
+  problemContainer.innerHTML += `<p>(12) ${a} &times ${b} &divide ${c} = _____ (mixed number)</p>`;
+  return wholeNumber + (numerator === 0 ? '' : ` ${numerator}/${denominator}`);
+}
+
+function q13(problemContainer) {
+  let a = Math.floor(Math.random() * 20) + 11;
+  let b = a + Math.floor(Math.random() * 10) + 2;
+
+  let difference = Math.random() < 0.5 ? b*b - a*a : a*a - b*b;
+
+  let factors = [];
+  for (let i = Math.floor(Math.abs(difference) * 0.5); i >= 2; i--) {
+    if (difference % i === 0) {
+      factors.push(i);
+    }
+  }
+  let factor = factors[Math.floor(Math.random() * factors.length)];
+
+  problemContainer.innerHTML = `<p>(13) ${a}<sup>2</sup> - ${b}<sup>2</sup> = ${factor} &times _____</p>`;
+  return difference / factor;
+}
+
+function q14(problemContainer) {
+  let a = Math.floor(Math.random() * 251) + 300;
+  let b = Math.floor(Math.random() * 13) + 10;
+
+  problemContainer.innerHTML = `<p>(14) ${a} &times ${b} = _____</p>`;
+  return a * b;
+}
+
+function q15(problemContainer) {
+  let numbers = [];
+  let signs = [];
+  let expression = '';
+  for (i = 0; i < 6; i++){
+    let temp = '' + (Math.floor(Math.random() * 10) + 1);
+    if (i != 5) {
+      if (i % 2 === 0) {
+        temp += ' ' + ['+', '-'][Math.floor(Math.random() * 2)] + ' ';
+      } else {
+        temp += ' ' + ['*', '/' ][Math.floor(Math.random() * 2)] + ' ';
+      }
+    }
+    expression += temp;
+  }
+  problemContainer.innerHTML = `<p>(15) ${expression} = _____</p>`;
+  return fracAnswer(math.evaluate(expression));
+}
+
+function q16(problemContainer) {
+  let biggie = 1000 + Math.floor(Math.random() * 17) * 100;
+  let smallie = Math.floor(Math.random() * 6) + 3;
+  biggie -= smallie;
+  let other = [Math.pow(smallie, 2) * -1, Math.pow(smallie, 2), Math.pow(smallie, 2) * 2][Math.floor(Math.random() * 3)];
+  problemContainer.innerHTML = other < 0 ? `<p>(16) ${biggie} * ${smallie} - ${Math.abs(other)} = _____</p>` : `<p>(16) ${biggie} * ${smallie} + ${other} = _____</p>`;
+  return biggie * smallie + other;
+}
+
+function q17(problemContainer) {
+  let oz2 = (Math.floor(Math.random() * 25) + 12) / 4;
+  let gram2 = oz2 * 5/2;
+  
+  problemContainer.innerHTML  = `<p>(17) 1 gram = 0.4 oz, and ${oz2} = ____ grams</p>`;
+  return fracAnswer(gram2);
+}
+
+function q18(problemContainer) {
+  let num1 = Math.floor(Math.random() * 9) + 1;
+  num1 = num1 * 100 + num1 * 10 + num1;
+  let num2 = Math.floor(Math.random() * 15) + 6;
+  let num3 = num1 * num2 / 37;
+
+  problemContainer.innerHTML = `<p>(18) ${num1} &times n &divide 37 = ${num3}</p>`;
+  return num2;
+}
+
+function q19(problemContainer) {
+  let num = Math.floor(Math.random() * 15) + 21;
+  let low = Math.floor(Math.random() * 4) + 2;
+  let sign = Math.random() < 0.5 ? '<' : '&le';
+  let count = 0;
+  let adj = sign === '<' ? 1 : 0;
+  for (i = low + adj; i < num; i++) {
+    if (gcd(num, i) === 1) {
+      count += 1;
+    }
+  }
+  if (sign === '<') {
+    problemContainer.innerHTML = `<p>(19) The number of integers n, ${low} < n < ${num}, which are relatively prime to ${num} is _____</p>`;
+  } else {
+    problemContainer.innerHTML = `<p>(19) The number of integers n, ${low} &le; n < ${num}, which are relatively prime to ${num} is _____</p>`;
+  }
+  
+  return count;
+}
+
+function q20(problemContainer) {
+  let decider = Math.random();
+  if (decider < 0.5) {
+    let a = Math.floor(Math.random() * 9900001) + 100000;
+    let b = Math.floor(Math.random() * 9901) + 100;
+    problemContainer.innerHTML = `<p>*(20) ${a} &divide ${b} = _____`;
+    return getEstimateRange(a / b); 
+  } else {
+    let a = Math.floor(Math.random() * 491) + 100;
+    let b = Math.floor(Math.random() * 491) + 100;
+    let c = Math.floor(Math.random() * 9901) + 100;
+    problemContainer.innerHTML = `<p>*(20) ${a} &times ${b} + ${c} = _____`;
+    return getEstimateRange(a * b + c);
+  }
+}
+
+function q21(problemContainer) {
+  let root = Math.floor(Math.random() * 49) + 2;
+  let power;
+  if (root <= 20) {
+    power = Math.random() < 0.5 ? 2 : 3;
+  } else {
+    power = 2;
+  }
+  
+  if (Math.random() < 0.5) {
+    problemContainer.innerHTML = `<p>(21) \\(${root}^${power}\\) = _____</p>`;
+    MathJax.typeset();
+    return root ** power;
+  } else {
+    problemContainer.innerHTML = `<p>(21) \\(\\sqrt[${power}]{${root ** power}}\\) = _____</p>`;
+    MathJax.typeset();
+    return root;
+  }
+}
+
+function q22(problemContainer) {
+  let den1 = Math.floor(Math.random() * 9) + 2;
+  let den2 = Math.floor(Math.random() * 9) + 2;
+  let whole1 = (Math.floor(Math.random() * 3) + 1) * den2;
+  let whole2 = (Math.floor(Math.random() * 3) + 1) * den1;
+  let num1 = Math.floor(Math.random() * (den1 - 1)) + 1;
+  let num2 = Math.floor(Math.random() * (den2 - 1)) + 1;
+  [num1, den1] = simplify(num1, den1);
+  [num2, den2] = simplify(num2, den2);
+
+  let answerWhole = whole1 * whole2 + whole1 * num2 / den2 + whole2 * num1 / den1;
+  [answerNum, answerDen] = simplify(num1 * num2, den1 * den2);
+  let answer = `${answerWhole} ${answerNum}/${answerDen}`;
+  problemContainer.innerHTML = `<p>(22) \\(${whole1}\\frac{${num1}}{${den1}}\\times ${whole2}\\frac{${num2}}{${den2}}\\) = _____</p>`;
+  MathJax.typeset();
+  return answer;
+}
+
+function q23(problemContainer) {
+  let numbers = [];
+  for (i = 0; i < 6; i++) {
+    numbers.push(Math.floor(Math.random() * 9) + 2);
+  }
+  let signs = [];
+  for (i = 0; i < 5; i++) {
+    Math.random() < 0.5 ? signs.push('+') : signs.push('-');
+  }
+  
+  let answer = numbers[0];
+  let temp;
+  answer = signs[0] === '+' ? answer + numbers[1] : answer - numbers[1];
+  temp = signs[2] === '+' ? numbers[2] + numbers[3] : numbers[2] - numbers[3];
+  answer = signs[1] === '+' ? answer + Math.abs(temp) : answer - Math.abs(temp);
+  temp = signs[4] === '+' ? numbers[4] + numbers[5] : numbers[4] - numbers[5]
+  answer = signs[3] === '+' ? answer + Math.abs(temp) : answer - Math.abs(temp);
+
+  problemContainer.innerHTML = `<p>(23) ${numbers[0]} ${signs[0]} ${numbers[1]} ${signs[1]} |${numbers[2]} ${signs[2]} ${numbers[3]}| ${signs[3]} |${numbers[4]} ${signs[4]} ${numbers[5]}| = _____</p>`;
+  console.log(answer);
+  return answer;
+}
+
+function q24(problemContainer) {
+  let percent1 = Math.floor(Math.random() * 50) + 1;
+  let factor, percent2, num1, num2;
+
+  do {
+    factor = Math.floor(Math.random() * 3) + 2;
+  } while (percent1 * factor > 100)
+  do {
+    num2 = Math.floor(Math.random() * 301) + 100;
+  } while (num2 * factor > 750)
+  percent2 = percent1 * factor;
+  num1 = num2 * factor;
+
+  problemContainer.innerHTML = `<p>(24) ${percent1}% of ${num1} is ${percent2}% of _____ </p>`;
+  return num2;
+}
+
+function q25(problemContainer) {
+  function generateRandomLetter() {
+    return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+  }
+
+  let array1 = [];
+  let array2 = [];
+  let array3 = [];
+
+  let size = Math.floor(Math.random() * 3) + 4;
+  for (i = 0; i < size; i++) {
+    array1.push(generateRandomLetter());
+  }
+  size = Math.floor(Math.random() * 3) + 4;
+  for (i = 0; i < size; i++) {
+    array2.push(generateRandomLetter());
+  }
+  size = Math.floor(Math.random() * 3) + 4;
+  for (i = 0; i < size; i++) {
+    array3.push(generateRandomLetter());
+  }
+  let string1 = array1.join(', ');
+  let string2 = array2.join(', ');
+  let string3 = array3.join(', ');
+
+  function union(array1, array2) {
+    let newArray = [...array1, ...array2];
+    newArray = [...new Set(newArray)];
+    return newArray;
+  }
+  function intersection(array1, array2) {
+    let set2 = new Set(array2);
+    let newArray = array1.filter(item => set2.has(item));
+    return newArray;
+  }
+
+  let version = Math.floor(Math.random() * 2);
+  let answerArray;
+  if (version === 0) {
+    let unionArray = union(array1, array2);
+    answerArray = intersection(unionArray, array3);
+    problemContainer.innerHTML = `<p>(25) \\((\\{${string1}\\}\\cup\\{${string2}\\})\\cap\\{${string3}\\}\\text{ contains how many distinct elements?}\\) ____</p>`;
+  } else {
+    let intersectionArray = intersection(array1, array2);
+    answerArray = union(intersectionArray, array3);
+    problemContainer.innerHTML = `<p>(25) \\((\\{${string1}\\}\\cap\\{${string2}\\})\\cup\\{${string3}\\}\\text{ contains how many distinct elements?}\\) ____</p>`;
+  }
+  MathJax.typeset();
+  return answerArray.length; 
+}
+
+function q26(problemContainer) {
+  let num1 = Math.floor(Math.random() * 7) + 3;
+  let num2 = Math.floor(Math.random() * 21) + 10;
+  let num3;
+  do {
+    num3 = Math.floor(Math.random() * 21) + 10;
+  } while (num2 === num3);
+  let factor = [1.5, 2, 3, 4, 5][Math.floor(Math.random() * 5)];
+
+  problemContainer.innerHTML = `<p>(26) If ${num1}x + ${num2} = ${num3}, then ${num1 * factor}x = ____</p>`;
+  return fracAnswer((num3 - num2) * factor);
+}
+
+function q27(problemContainer) {
+  let num1 = [1, 2, 3, 4, 5, 6][Math.floor(Math.random() * 6)];
+  let num2 = [7, 8, 9, 10, 11][Math.floor(Math.random() * 5)];
+  let num3 = [12, 13, 14, 15][Math.floor(Math.random() * 4)];
+
+  problemContainer.innerHTML = `<p>(27) ${num1/16} - ${num2/16} - ${num3/16} = ____</p>`;
+  return fracAnswer(num1/16 - num2/16 - num3/16);
+}
+
+function q28(problemContainer) {
+  let base = Math.floor(Math.random() * 6) + 4;
+  let base10num = Math.floor(Math.random() * 451) + 50;
+  let baseXnum = base10num.toString(base);
+
+  if (Math.random() < 0.5) {
+    problemContainer.innerHTML = `<p>(28) \\(${base10num} = \\)____\\(_${base}\\)</p>`;
+    MathJax.typeset();
+    return baseXnum;
+  } else {
+    problemContainer.innerHTML = `<p>(28) \\(${baseXnum}_${base} = \\)____</p>`;
+    MathJax.typeset();
+    return base10num;
+  }
+}
+
+function q29(problemContainer) {
+  let digits = Math.floor(Math.random() * 3) + 3;
+  let digitNum = [];
+  let digitMax = Math.floor(Math.random() * 2) + digits;
+  for (let i = 0; i < digitMax; i++) {
+    digitNum.push(Math.floor(Math.random() * 10));
+    do {
+      digitNum.pop();
+      digitNum.push(Math.floor(Math.random() * 10));
+    } while (digitNum.length !== new Set(digitNum).size)
+  }
+
+  let answer = 1;
+  for (let i = 0; i < digits; i++) {
+    if (i === 0 && digitNum.includes(0)) {
+      answer *= digitNum.length - 1;
+    } else {
+      answer *= digitNum.length - i;
+    }
+  }
+  
+  const formatter = new Intl.ListFormat({ style: 'long', type: 'conjunction'});
+  problemContainer.innerHTML = `<p>(29) How many ${digits}-digit numbers can be made using the digits ${formatter.format(digitNum.map(String))} without repetition? ____</p>`;
+  return answer;
+}
+
+function q30(problemContainer) {
+  let num = Math.floor(Math.random() * 990001) + 10000;
+
+  problemContainer.innerHTML = `<p>*(30) \\(\\sqrt{${num}} = \\) ____</p>`;
+  MathJax.typeset();
+  return getEstimateRange(Math.sqrt(num));
 }

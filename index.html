@@ -4,6 +4,8 @@
     <title>NS Practice</title>
 
     <link rel="stylesheet" href="ns-practice-styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.8.1/math.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
   </head>
   <body>
     <div class="left-panel">
@@ -35,19 +37,19 @@
         </p>
         <div class="rp-skills-buttons">
           <div class="rp-skills-buttons-leftColumn">
-            <button class="rp-skills-buttons-style" onclick="togglePage('skills-fractionSimpl')">
+            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('fractionSimplifying', 'Fraction Simplification')">
               Fraction Simplification
             </button>
-            <button class="rp-skills-buttons-style" onclick="togglePage('skills-decimalToFraction')">
+            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('decimalToFraction', 'Decimal to Fraction')">
               Decimal to Fraction
             </button>
           </div>
           <div class="rp-skills-buttons-rightColumn">
-            <button class="rp-skills-buttons-style" onclick="togglePage('skills-squaresCubes')">
+            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('squaresCubes', 'Squares and Cubes')">
               Squares and Cubes
             </button>
-            <button class="rp-skills-buttons-style" onclick="togglePage('skills-arithmeticManyNumbers')">
-              Arithmetic with many numbers
+            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('addSubtractManyNumbers', 'Adding/Subtracting many numbers')">
+              Adding/Subtracting many numbers
             </button>
           </div>
         </div>
@@ -58,15 +60,15 @@
         </p>
         <div class="rp-tricks-buttons">
           <div class="rp-tricks-buttons-leftColumn">
-            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-cubicRootABC')">
+            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('cubicRootABC', 'Cubic Root ([a+b][b+c][c+a])')">
               Cubic Root ([a+b][b+c][c+a])
             </button>
-            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-doubleIntegralAddSubtract')">
+            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('doubleIntegralAddSubtract', 'Double Integral Add/Subtract')">
               Double Integral Add/Subtract
             </button>
           </div>
           <div class="rp-tricks-buttons-rightColumn">
-            <button class="rp-tricks-buttons-style" onclick="togglePage('tricks-determinant3x3')">
+            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('determinant3x3', 'Determinant of 3x3 Matrix')">
               Determinant of 3x3 Matrix
             </button>
           </div>
@@ -76,10 +78,10 @@
         <p class="rp-test-title">Test</p>
         <div class="rp-test-buttons">
           <div class="rp-test-buttons-leftColumn">
-            <button class="rp-test-buttons-style" onclick="togglePage('question-Combos')">
-              Question Combos
+            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-custom-intro')">
+              Custom Test
             </button>
-            <button class="rp-test-buttons-style" onclick="">
+            <button class="rp-test-buttons-style" onclick="togglePage(`tests-questions-11-20`)">
               Questions 11-20
             </button>
           </div>
@@ -93,8 +95,10 @@
       </div>
       <!-- #endregion -->
 
+      
 
       <!-- #region Skills Individual Pages-->
+      <!--
       <div class="skillPage skills-fractionSimpl page hidden">
         <p>Fraction Simplification</p>
         <div class="skill-generator-container fractionSimpl-generator-container">
@@ -112,7 +116,7 @@
           ">Start
         </button>
       </div>
-      <div class="skillPage skills-squaresCubes page hidden">
+      <div/ class="skillPage skills-squaresCubes page hidden">
         <p>Squares and Cubes</p>
         <div class="skill-generator-container squaresCubes-generator-container"></div>
         <input class="skill-search-bar squaresCubes-search-bar" placeholder="Enter">
@@ -132,19 +136,33 @@
           ">Start
         </button>
       </div>
-      <div class="skillPage skills-arithmeticManyNumbers page hidden">
-        <p>Arithmetic with many numbers</p>
-        <div class="skill-generator-container arithmeticManyNumbers-generator-container"></div>
-        <input class="skill-search-bar arithmeticManyNumbers-search-bar" placeholder="Enter">
-        <button class="skill-start-button arithmeticManyNumbers-start-button" onclick="
-          swapStartStop('arithmeticManyNumbers-start-button');
-          arithmeticManyNumbers();
+      <div class="skillPage skills-addSubtractManyNumbers page hidden">
+        <p>Adding/Subtracting many numbers</p>
+        <div class="skill-generator-container addSubtractManyNumbers-generator-container"></div>
+        <input class="skill-search-bar addSubtractManyNumbers-search-bar" placeholder="Enter">
+        <button class="skill-start-button addSubtractManyNumbers-start-button" onclick="
+          swapStartStop('addSubtractManyNumbers-start-button');
+          addSubtractManyNumbers();
           ">Start
         </button>
       </div>
+      -->
+      <div class="skillPage page hidden">
+        <p data-question="" class="skill-title"></p>
+        <div class="skill-generator-container"></div>
+        <input class="skill-search-bar" placeholder="Enter">
+        <button class="skill-start-button" onclick="
+          swapStartStop('skill-start-button');
+          let skillName = document.querySelector('.skill-title').getAttribute('data-question');
+          window[skillName]();
+          ">Start
+        </button>
+      </div>
+
       <!-- #endregion -->
 
       <!-- #region Tricks Individual Pages-->
+      <!--
       <div class="trickPage tricks-cubicRootABC page hidden">
         <p>Cubic Root ([a+b][b+c][c+a])</p>
         <div class="trick-generator-container cubicRootABC-generator-container"></div>
@@ -175,17 +193,52 @@
           ">Start
         </button>
       </div>
+      -->
+      <div class="trickPage page hidden">
+        <p data-question="" class="trick-title"></p>
+        <div class="trick-generator-container"></div>
+        <input class="trick-search-bar" placeholder="Enter">
+        <button class="trick-start-button" onclick="
+          swapStartStop('trick-start-button');
+          let trickName = document.querySelector('.trick-title').getAttribute('data-question');
+          window[trickName]();
+          ">Start
+        </button>
+      </div>
       <!-- #endregion -->
       
       <!-- #region Test Individual Pages -->
-      <div class="testPage question-Combos page hidden">
-        <p>Question Combos</p>
-        <div class="test-generator-container question-Combos-generator-container"></div>
-        <input class="test-search-bar question-Combos-search-bar" placeholder="Enter">
-        <button class="test-start-button question-Combos-start-button" onclick="
-          swapStartStop('question-Combos-start-button');
-          questionCombos();
+      <div class="testPage tests-questions-custom-intro page hidden">
+        <p>Custom Test</p>
+        <p>Enter the starting question number:</p>
+        <input class="test-search-bar" placeholder="Enter">
+        <p>Enter the ending question number:</p>
+        <input class="test-search-bar" placeholder="Enter">
+        <button class="test-start-button" onclick="
+          let min = parseInt(document.querySelector('.tests-questions-custom-intro input:nth-of-type(1)').value);
+          let max = parseInt(document.querySelector('.tests-questions-custom-intro input:nth-of-type(2)').value);
+          if (isNaN(min) || isNaN(max) || min < 1 || max > functionArray.length || min > max) {
+            alert('Please enter valid question numbers between 1 and ' + functionArray.length);
+            return;
+          }
+          testMakerCustom(min, max);
           ">Start
+        </button>
+      </div>
+      <div class="testPage tests-questions-custom page hidden">
+        <p class="custom-test-title">Custom Test</p>
+        <div class="test-generator-container questions-custom-generator-container"></div>
+        <input class="test-search-bar questions-custom-search-bar" placeholder="Enter">
+        <button class="test-start-button questions-custom-start-button"
+          >Start
+        </button>
+        <button class="back" onclick="
+          if (document.querySelector('.questions-custom-start-button').textContent === 'Stop') {
+            document.querySelector('.questions-custom-start-button').click();
+          }
+          togglePage('tests-questions-custom-intro');
+          ">Back
+        </button>
       </div>
       <div class="testPage tests-questions-1-10 page hidden">
         <p>Questions 1-10</p>
@@ -195,15 +248,25 @@
           swapStartStop('questions-1-10-start-button');
           testMaker(1, 10, 'questions-1-10-generator-container', 'questions-1-10-search-bar', 'questions-1-10-start-button');
           ">Start
+        </button>
       </div>
       <div class="testPage tests-questions-11-20 page hidden">
         <p>Questions 11-20</p>
+        <div class="test-generator-container questions-11-20-generator-container"></div>
+        <input class="test-search-bar questions-11-20-search-bar" placeholder="Enter">
+        <button class="test-start-button questions-11-20-start-button" onclick="
+          swapStartStop('questions-11-20-start-button');
+          testMaker(11, 20, 'questions-11-20-generator-container', 'questions-11-20-search-bar', 'questions-11-20-start-button');
+          ">Start
+        </button>
       </div>
       <!-- #endregion -->
     </div>
 
 
+    
     <script src="ns-practice-layout.js"></script>
+    <script src="ns-practice-helper.js"></script>
     <script src="ns-practice-skills.js"></script>
     <script src="ns-practice-tricks.js"></script>
     <script src="ns-practice-test.js"></script>
