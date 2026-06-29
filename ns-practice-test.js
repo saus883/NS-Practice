@@ -1,4 +1,4 @@
-const functionArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30];
+const functionArray = [q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15, q16, q17, q18, q19, q20, q21, q22, q23, q24, q25, q26, q27, q28, q29, q30, q31, q32, q33];
 
 function getEstimateRange(answer) {
   let array = [];
@@ -101,17 +101,20 @@ function q2(problemContainer) {
 }
 
 function q3(problemContainer) {
-  const a = Math.floor(Math.random() * 11) + 2;
-  const b = Math.floor((Math.random() * 25) * 100) / 100;
-  const product = a * b;
+  const a = math.bignumber(math.floor(math.random() * 11) + 2);//mathConfigured.floor(mathConfigured.multiply(mathConfigured.random(), 11)) + 2;
+  const b = math.bignumber(math.round(math.multiply(math.random(), 25), 2));//mathConfigured.round(mathConfigured.multiply(mathConfigured.random(), 25), 2);
+  const product = math.multiply(a, b);
   
   if (Math.random() < 0.5) {
-    problemContainer.innerHTML += `<p>(3) ${product} &#247 ${a}</p>`;
+    problemContainer.innerHTML += `<p>(3) \\(${product} \\div ${a}\\) = ____</p>`;
+    MathJax.typeset();
     return b;
   } else {
-    const randomNum = Math.floor(Math.random() * 12) + 1
-    problemContainer.innerHTML += `<p>(3) ${product} &times <sup>${randomNum}</sup>&frasl;<sub>${a}</sub></p>`;
-    return product * randomNum / a;
+    const randomNum = Math.floor(Math.random() * 12) + 1;
+    let frac = math.fraction(randomNum, math.number(a));
+    problemContainer.innerHTML += `<p>(3) \\(${product} \\times \\frac{${frac.n}}{${frac.d}}\\) = ____</p>`;
+    MathJax.typeset();
+    return math.evaluate(`${product} * ${frac.n} / ${frac.d}`);
   }
 }
 
@@ -577,4 +580,262 @@ function q30(problemContainer) {
   problemContainer.innerHTML = `<p>*(30) \\(\\sqrt{${num}} = \\) ____</p>`;
   MathJax.typeset();
   return getEstimateRange(Math.sqrt(num));
+}
+
+function q31(problemContainer) {
+  let frac1 = [Math.floor(Math.random() * 13) + 4];
+  let frac2 = [Math.floor(Math.random() * 13) + 4];
+  frac1.push(Math.floor(Math.random() * (frac1[0] - 1)) + 1);
+  frac2.push(Math.floor(Math.random() * (frac2[0] - 1)) + 1);
+
+  if (checkDecimalType(frac1[1], frac1[0]) === 'Terminating' && checkDecimalType(frac2[1], frac2[0]) === 'Terminating') {
+    problemContainer.innerHTML = `<p>(31) \\(${frac1[1]/frac1[0]} \\div ${frac2[1]/frac2[0]}\\) = ____</p>`;
+  } else if (checkDecimalType(frac1[1], frac1[0]) === 'Terminating' && checkDecimalType(frac2[1], frac2[0]) === 'Repeating') {
+    let repeater = terminateRepeatingDecimal(frac2[1], frac2[0]);
+    problemContainer.innerHTML = `<p>(31) \\(${frac1[1]/frac1[0]} \\div ${repeater}\\dots\\) = ____</p>`;
+  } else if (checkDecimalType(frac1[1], frac1[0]) === 'Repeating' && checkDecimalType(frac2[1], frac2[0]) === 'Terminating'){
+    let repeater = terminateRepeatingDecimal(frac1[1], frac1[0]);
+    problemContainer.innerHTML = `<p>(31) \\(${repeater}\\dots \\div ${frac2[1]/frac2[0]}\\) = ____</p>`;
+  } else {
+    let repeater1 = terminateRepeatingDecimal(frac1[1], frac1[0]);
+    let repeater2 = terminateRepeatingDecimal(frac2[1], frac2[0]);
+    problemContainer.innerHTML = `<p>(31) \\(${repeater1}\\dots \\div ${repeater2}\\dots\\) = ____</p>`;
+  }
+  MathJax.typeset();
+  return fracAnswer((frac1[1]/frac1[0]) / (frac1[2]/frac2[0]));
+}
+
+function q32(problemContainer) {
+  let frac1 = [Math.floor(Math.random() + 9) + 2, Math.floor(Math.random() * 5) + 2];
+  let frac2 = [Math.floor(Math.random() + 9) + 2, Math.floor(Math.random() * 5) + 2];
+  frac1.splice(1, 0, Math.floor(Math.random() * (frac1[0] - 1)) + 1);
+  frac2.splice(1, 0, Math.floor(Math.random() * (frac2[0] - 1)) + 1);
+
+  problemContainer.innerHTML = `<p>(32) \\(${frac1[0]}\\frac{${frac1[1]}}{${frac1[2]}} \\div ${frac2[0]}\\frac{${frac2[1]}}{${frac2[2]}}\\) = ____</p>`;
+  return mathFrac(((frac1[0] * frac1[2] + frac1[1]) * (frac2[2])) / ((frac2[2]) * (frac2[0] * frac2[2] + frac2[1])));
+}
+
+function q33(problemContainer) {
+  let frac = [[8, 11, 12, 14, 15, 16][Math.floor(Math.random() * 6)]];
+  frac.unshift(Math.floor(Math.random() * (frac[0] - 1)) + 1);
+
+  problemContainer.innerHTML = `<p>(33) The multiplicative inverse of ${frac[0] / frac[1]} is ____</p>`;
+  return fracAnswer(frac[1] / frac[0]);
+}
+
+function q34(problemContainer) {
+  let num1 = (Math.floor(Math.random() * 20) + 1) / 2;
+  let num2 = Math.floor(Math.random() * 50) + 1;
+  num2 /= Math.random() < 0.5 ? 10 : 100;
+
+  problemContainer.innerHTML = `<p>(34) \\(${num1 * 2}^2 \\div ${num1}^2 \\times ${num2}^2\\) = ____</p>`;
+  return 4 * num2*num2;
+}
+
+function q35(problemContainer) {//add exponents, like cubes to some numbers, learn about exponents and modulus more
+  let divisor = Math.floor(Math.random() * 7) + 3;
+  let num1 = Math.floor(Math.random() * 40) + 1;
+  let num2 = Math.random() < 0.5 ? Array.from({ length: 2 }, () => Math.floor(Math.random() * 20) + 1) : Math.floor(Math.random() * 40) + 1;
+  let num3 = num1 % divisor === 0 ? Math.floor(Math.random() * 40) + 1 : (Math.floor(Math.random() * 5) + 1)(num1 % divisor);
+  
+  if (Array.isArray(num2)) {
+    problemContainer.innerHTML = `<p>(35) \\((${num1} + ${num2[0]} \\times ${num2[1]} - ${num3})\\) = ____</p>`;
+    MathJax.typeset();
+    return (num1 + num2[0] * num2[1] - num3) % divisor;
+  } else {
+    problemContainer.innerHTML = `<p>(35) \\((${num1} + ${num2} - ${num3})\\) = ____</p>`;
+    MathJax.typeset();
+    return (num1 + num2 - num3) % divisor;
+  }
+}
+
+function q36(problemContainer) {
+  let num1 = Math.floor(Math.random() * 16) + 10;
+  let num2 = Math.random() < 0.5 ? num1 - Math.floor(Math.random() * 4) + 1 : num1 + Math.floor(Math.random() * 4) + 1;
+  
+  if (Math.random() < 0.5) { //version 1
+    problemContainer.innerHTML = `<p>(36) \\(\\frac{${num1}}{${num2}} + \\frac{${num2}}{${num1}}\\) = ____</p>`;
+    MathJax.typeset();
+    return fracAnswer(num1/num2 + num2/num1);
+  } else {
+    problemContainer.innerHTML = `<p>(36) If \\(\\frac{${num1}}{${num2}} + \\frac{${num2}}{${num1}} = 2 + \\frac{B}{${num1*num2}}\\), then B = ____</p>`;
+    MathJax.typeset();
+    return (num1 - num2)**2;
+  }
+}
+
+function q37(problemContainer) {
+  let frac1 = [Math.floor(Math.random() * 10) + 3];
+  let temp = 0;
+  do {
+    temp = Math.floor(Math.random() * 17) + 4;
+  } while (temp <= frac1[0])
+  frac1.push(temp);
+  let n = Math.floor(Math.random() * 7) + 2;
+  let frac2 = Math.random() < 0.5 ? [frac1[0] * n - 1, frac1[1] * n + 1] : [frac1[0] * n + 1, frac1[1] * n - 1];
+
+  problemContainer.innerHTML = `<p>(37) \\(\\frac{${frac1[0]}}{${frac1[1]}} - \\frac{${frac2[0]}}{${frac2[1]}}\\) = ____</p>`;
+  MathJax.typeset();
+  return fracAnswer(frac1[0]/frac1[1] - frac2[0]/frac2[1]);
+}
+
+function q38(problemContainer) {
+  let den = [90, 99, 900, 990, 999][Math.floor(Math.random() * 5)];
+  let num = Math.floor(Math.random() * (den - 1)) + 1;
+
+  let decimal = Math.trunc(100000 * (num/den)) / 100000;
+
+  problemContainer.innerHTML = `<p>(38) \\(${decimal}...\\) = ____ (proper fraction)</p>`;
+  return fracAnswer(num/den);
+}
+
+function q39(problemContainer) {
+  function fibonacciSum(problemContainer) {
+    const length = Math.floor(Math.random() * 7) + 6;
+    const sequence = [Math.floor(Math.random() * 5) + 1];
+    sequence.push(Math.floor(Math.random() * 4) + sequence[0]);
+
+    for (let i = 2; i < length; i++) {
+      sequence.push(sequence[i - 1] + sequence[i - 2]);
+    }
+
+    let string = sequence.join(' + ');
+
+    let sum;
+    for (let i = 0; i < sequence.length; i++) {
+      sum += sequence[i];
+    }
+    
+    problemContainer.innerHTML = `<p>(39) ${string} = ____</p>`;
+    return sum;
+  }
+  function reciprocalTriangularSum(problemContainer) {
+    let sequence = [];
+    let length = Math.floor(Math.random() * 3) + 4;
+    for (let i = 1; i <= length; i++) {
+      sequence.push({ numerator: 1, denominator: (i)(i + 1)/2});
+    }
+
+    let sequenceString = '';
+    for (let i = 0; i < length; i++) {
+      if (sequence[i].denominator === 1) {
+        sequenceString += `1`; 
+      } else {
+        sequenceString += `\\frac{${sequence[i].numerator}}{${sequence[i].denominator}}`;
+      }
+
+      if (i != length - 1) {
+        sequence += ` + `;
+      }
+    }
+
+    let answer;
+    for (let i = 0; i < length; i++) {
+      answer += sequence[i].numerator / sequence[i].denominator;
+    }
+    
+    problemContainer.innerHTML = `<p>(39) \\(${sequenceString}\\) = ____</p>`;
+    MathJax.typeset();
+    return fracAnswer(answer);
+  }
+  return [fibonacciSum(), reciprocalTriangularSum()][Math.floor(Math.random() * 2)];
+}
+
+function q40(problemContainer) {
+  function yficm(problemContainer) {
+    let array = [0, 0, 0];
+    do {
+      array[0] = Math.floor(Math.random() * 5) + 1;
+      array[1] = Math.floor(Math.random() * 11) - 5;
+      array[2] = Math.floor(Math.random() * 19) - 9;
+    } while (array[0] * 36 + array[1] * 12 + array[2] <= 0)
+
+    let centimeters = 2.54(array[0] * 36 + array[1] * 12 + array[2]);
+
+    array[1] = array[1] < 0 ? '-' + array[1] : '+' + array[1];
+    array[2] = array[2] < 0 ? '-' + array[2] : '+' + array[2];
+
+    problemContainer.innerHTML = `<p>*(40) ${array[0]} yards ${array[1]} feet ${array[2]} inches = ____ centimeters</p>`;
+    return centimeters;
+  }
+  function cubeRoot(problemContainer) {
+    let num = Math.floor(Math.random() * (10**10 - 10**7)) + 10**7;
+
+    problemContainer.innerHTML = `<p>*(40) \\(\\sqrt[3]{${num}}\\) = ____</p>`;
+    return getEstimateRange(Math.pow(num, 1/3));
+  }
+
+  return [yficm(), cubeRoot()][Math.floor(Math.random() * 2)];
+}
+
+function q41(problemContainer) {
+  let array = [];
+  for (let i = 0; i < 4; i++) {
+    array.push(Math.floor(Math.random() * 10) + 1);
+  }
+  let signs = [];
+  for (let i = 0; i < 2; i++) {
+    signs.push(['+','-'][Math.floor(Math.random() * 2)]);
+  }
+  let answer = signs[0] === '+' ? array[0] + array[1] : array[0] + array[1];
+  answer *= signs[1] === '+' ? array[2] + array[3] : array[2] + array[3];
+
+  problemContainer.innerHTML = `<p>(41) \\((${array[0]} ${sign[0]} ${array[1]})(${array[2]} ${sign[1]} ${array[3]}) = ax^2 + bx + c\\text{.a + b + c}\\) = ____</p>`;
+  MathJax.typeset();
+  return answer;
+}
+
+function q42(problemContainer) {
+  let baseNum = [2, 3, 4][Math.floor(Math.random()) * 3];
+  let exp = [];
+  do {
+    exp[0] = Math.floor(Math.random() *  15) - -7;
+    exp[1] = Math.floor(Math.random() *  15) - -7;
+    exp[2] = Math.floor(Math.random() *  15) - -7;
+  } while (Math.abs(exp[0] + exp[1] + exp[2]) > 6)
+
+  problemContainer.innerHTML = `<p>(42) \\(${baseNum}^${exp[0]} \\times ${baseNum}^${exp[1]} \\times ${baseNum}^${exp[2]} \\) = ____</p>`;
+  return fracAnswer(Math.pow(baseNum, exp[0] + exp[1] + exp[2]));
+}
+
+function q43(problemContainer) {
+  let comp1 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1];
+  let comp2 = [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1];
+  let signs = [];
+  for (i = 0; i < 2; i++) {
+    if (Math.random() < 0.5) {
+      signs.push('+');
+    } else {
+      signs.push('-');
+    }
+  }
+
+  let a, b;
+  if (signs[0] === '+' && signs[1] === '+') {
+    a = comp1[0] * comp2[0] - comp1[1] * comp2[1];
+    b = comp1[1] * comp2[0] + comp1[0] * comp2[1];
+  } else if (signs[0] === '+' && signs[1] === '-') {
+    a = comp1[0] * comp2[0] + comp1[1] * comp2[1];
+    b = comp1[1] * comp2[0] - comp1[0] * comp2[1];
+  } else if (signs[0] === '-' && signs[1] === '+') {
+    a = comp1[0] * comp2[0] + comp1[1] * comp2[1];
+    b = comp1[0] * comp2[1] - comp1[1] * comp2[0];
+  } else {
+    a = comp1[0] * comp2[0] - comp1[1] * comp2[1];
+    b = -1 * comp1[1] * comp2[0] - comp1[0] * comp2[1];
+  }
+  problemContainer.innerHTML = `<p>(43) \\((${comp1[0]} ${signs[0]} ${comp1[1]}i)(${comp2[0]} ${signs[1]} ${comp2[1]}i) = a + bi, a + b\\) = ____</p>`;
+  MathJax.typeset();
+  return a + b;
+}
+
+function q44(problemContainer) {
+  let divisor = [3, 4, 6][Math.floor(Math.random() * 3)];
+  let dividend = Math.floor(Math.random() * 999000) + 1000;
+
+  let remainder = dividend % divisor;
+
+  problemContainer.innerHTML = `<p>(44) \\(${dividend} \\div ${divisor} \\text{has a remainder of}\\) ____</p>`;
+  MathJax.typeset();
+  return remainder;
 }
