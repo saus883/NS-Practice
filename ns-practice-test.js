@@ -102,7 +102,7 @@ function q2(problemContainer) {
 
 function q3(problemContainer) {
   const a = math.bignumber(math.floor(math.random() * 11) + 2);//mathConfigured.floor(mathConfigured.multiply(mathConfigured.random(), 11)) + 2;
-  const b = math.bignumber(math.round(math.multiply(math.random(), 25), 2));//mathConfigured.round(mathConfigured.multiply(mathConfigured.random(), 25), 2);
+  const b = math.bignumber(math.round(math.multiply(math.random(), 10), 2));//mathConfigured.round(mathConfigured.multiply(mathConfigured.random(), 25), 2);
   const product = math.multiply(a, b);
   
   if (Math.random() < 0.5) {
@@ -110,7 +110,7 @@ function q3(problemContainer) {
     MathJax.typeset();
     return b;
   } else {
-    const randomNum = Math.floor(Math.random() * 12) + 1;
+    const randomNum = Math.floor(Math.random() * 6) + 1;
     let frac = math.fraction(randomNum, math.number(a));
     problemContainer.innerHTML += `<p>(3) \\(${product} \\times \\frac{${frac.n}}{${frac.d}}\\) = ____</p>`;
     MathJax.typeset();
@@ -211,10 +211,10 @@ function q8(problemContainer) {
 function q9(problemContainer) {
   const dividend = Math.floor(Math.random() * 500) + 100;
   const divisor = Math.floor(Math.random() * 40) + 10;
-  const remainder = dividend % divisor;
-  problemContainer.innerHTML += `<p>(9) ${dividend} &divide ${divisor} = _____ (mixed number)</p>`;
-  [num, den] = simplify(remainder, divisor);
-  return fracAnswer(dividend / divisor)
+  problemContainer.innerHTML = `<p>(9) \\(${dividend} \\div ${divisor}\\) = _____ (mixed number)</p>`;
+  MathJax.typeset();
+  console.log(fracAnswer(dividend/divisor));
+  return fracAnswer(dividend / divisor);
 }
 
 function q10(problemContainer) {
@@ -275,19 +275,28 @@ function q12(problemContainer) {
 
 function q13(problemContainer) {
   let a = Math.floor(Math.random() * 20) + 11;
-  let b = a + Math.floor(Math.random() * 10) + 2;
+  let b = a + Math.floor(Math.random() * 9) + 2;
 
-  let difference = Math.random() < 0.5 ? b*b - a*a : a*a - b*b;
+  let difference = Math.random() < 0.5 ? b**2 - a**2 : a**2 - b**2;
+  console.log(difference);
 
   let factors = [];
   for (let i = Math.floor(Math.abs(difference) * 0.5); i >= 2; i--) {
-    if (difference % i === 0) {
+    if (math.abs(difference) % i === 0) {
       factors.push(i);
     }
   }
   let factor = factors[Math.floor(Math.random() * factors.length)];
 
-  problemContainer.innerHTML = `<p>(13) ${a}<sup>2</sup> - ${b}<sup>2</sup> = ${factor} &times _____</p>`;
+  if (difference < 0) {
+    problemContainer.innerHTML = `<p>(13) ${a}<sup>2</sup> - ${b}<sup>2</sup> = ${factor} &times _____</p>`;    
+  } else {
+    problemContainer.innerHTML = `<p>(13) ${b}<sup>2</sup> - ${a}<sup>2</sup> = ${factor} &times _____</p>`;
+  }
+
+  console.log(difference);
+  console.log(factor);
+  console.log(difference / factor);
   return difference / factor;
 }
 
@@ -331,7 +340,7 @@ function q17(problemContainer) {
   let oz2 = (Math.floor(Math.random() * 25) + 12) / 4;
   let gram2 = oz2 * 5/2;
   
-  problemContainer.innerHTML  = `<p>(17) 1 gram = 0.4 oz, and ${oz2} = ____ grams</p>`;
+  problemContainer.innerHTML  = `<p>(17) 1 gram = 0.4 oz, and ${oz2} oz = ____ grams</p>`;
   return fracAnswer(gram2);
 }
 
@@ -838,4 +847,106 @@ function q44(problemContainer) {
   problemContainer.innerHTML = `<p>(44) \\(${dividend} \\div ${divisor} \\text{has a remainder of}\\) ____</p>`;
   MathJax.typeset();
   return remainder;
+}
+
+function q45(problemContainer) {
+  let base = Math.floor(Math.random() * 6) + 3;
+  let a = Math.floor(Math.random() * (base**2 - base)) + base;
+  let b = Math.floor(Math.random() * (base**2 - base)) + base;
+  let c = a * b;
+  
+  problemContainer.innerHTML = `<p>(45) \\(${a.toString(base)}_${base} \\times ${b.toString(base)}_${base}\\) = ____\\(_${base}\\)</p>`;
+  MathJax.typeset();
+  return c.toString(base);
+}
+
+function q46(problemContainer) {
+  let base = Math.floor(Math.random() * 6) + 3;
+  let c = Math.floor(Math.random() * (base**3 - base**2)) + base**2;
+  let b = Math.floor(Math.random() * (base + 1)) + 1;
+  let remainder = c % b;
+
+  problemContainer.innerHTML = `<p>(46) \\(${c.toString(base)}_${base} \\div ${b.toString(base)}_${base} \\text{has a remainder of}\\) ____\\(_${base}\\)</p>`;
+  MathJax.typeset();
+  return remainder.toString(base);
+}
+
+function q47(problemContainer) {
+  let point = {
+    h: Math.floor(Math.random() * 17) + -8,
+    k: Math.floor(Math.random() * 41) + -20,
+  };
+  let line = Math.random() < 0.5 ? { b: Math.floor(Math.random() * 15) + point.k - 7 }: { b: 0 };
+  let newPoint = {
+    h: point.h,
+    k: point.k,
+  };
+
+  let difference = point.k - (point.h + line.b);
+  newPoint.h = point.h + difference;
+  newPoint.k = point.k - difference;
+
+  let b;
+  if (line.b < 0) {
+    b = `- ${line.b}`;
+  } else if (line.b > 0) {
+    b = `+ ${line.b}`;
+  } else {
+    b = ``;
+  }
+  problemContainer.innerHTML = `<p>(47) \\(\\text{The point {${point.h}, ${point.k}} is reflected across the line} y = x ${b} \\text{to the point {${newPoint.h}, ${newPoint.k}}. Find h + k.}\\) ____</p>`;
+  MathJax.typeset();
+  return newPoint.h + newPoint.k;
+}
+
+function q48(problemContainer) {
+  let sum = Math.floor(Math.random() * 27) + 1;
+
+  let answer;
+  if (sum <= 9) {
+    answer = (sum)(sum + 1) / 2;
+  } else if (sum <= 19) {
+    answer = 70 - (14 - sum)**2;
+  } else {
+    answer = (28 - sum)(28 - sum + 1) / 2;
+  }
+
+  problemContainer.innerHTML = `<p>(48) The sum of the digits of a 3-digit number is ${sum}. How many such numbers exist? ____</p>`;
+  return answer;
+}
+
+function q49(problemContainer) {
+  let cubic = {
+    a: Math.floor(Math.random() * 9) + 1,
+    b: (() => { let i = 0; do { i = Math.floor(Math.random() * 19) - 9 } while ( i === 0); return i; })(),
+    c: (() => { let i = 0; do { i = Math.floor(Math.random() * 19) - 9 } while ( i === 0); return i; })(),
+    d: (() => { let i = 0; do { i = Math.floor(Math.random() * 19) - 9 } while ( i === 0); return i; })(),
+  };
+
+  let product = -cubic.d / cubic.a;
+  let twotime = cubic.c / cubic.a;
+  let sum = -cubic.b / cubic.a;
+
+  let sign = {
+    bSign: cubic.b < 0 ? '-' : '+',
+    cSign: cubic.c < 0 ? '-' : '+',
+    dSign: cubic.d < 0 ? '-' : '+',
+  }
+
+  let otherSign = Math.random() < 0.5 ? '-' : '+';
+
+  problemContainer.innerHTML = `<p>(49) \\(\\text{P, Q, and R are the roots of} ${cubic.a}x^3 ${sign.bSign} ${cubic.b}x^2 ${sign.cSign} ${cubic.c}x ${sign.dSign} ${cubic.d} = y\\text{. Find PQR ${otherSign} (PQ + PR + QR) + P + Q + R.}\\) ____</p>`;
+  if (otherSign === '+') {
+    return product + twotime + sum;
+  } else {
+    return product - twotime + sum;
+  }
+}
+
+function q50(problemContainer) {
+  let a = Math.floor(Math.random() * 9001) + 1000;
+  let b = Math.floor(Math.random() * 9001) + 1000;
+
+  problemContainer = `<p>*(50) \\(${a} \\times ${b}\\) = ____</p>`;
+  return getEstimateRange(a * b);
 }

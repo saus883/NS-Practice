@@ -27,9 +27,14 @@ function fracAnswer(answer) { //returns an array containing decimal, fraction, a
 
   answers.push(math.format(math.fraction(answer), { fraction: 'ratio' }));
 
-  let mixedFraction = '' + (Math.floor(answer)) + ' ' + (math.format(math.fraction(answer - Math.floor(answer), { fraction: 'ratio' })));
-  answers.push(mixedFraction);
-  
+  if (answer > 0) {
+    let mixedFraction = '' + (math.floor(answer)) + ' ' + (math.format(math.fraction(answer - Math.floor(answer)), { fraction: 'ratio' }));
+    answers.push(mixedFraction);
+  } else if (answer < 0) {
+    let mixedFraction = '-' + (math.floor(math.abs(answer))) + ' ' + (math.format(math.fraction(answer*-1 - Math.floor(math.abs(answer))), { fraction: 'ratio' }));
+    answers.push(mixedFraction);
+  }
+
   return answers;
 }
 
