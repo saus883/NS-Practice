@@ -726,7 +726,7 @@ function q38(problemContainer) {
   let den = [90, 99, 900, 990, 999][Math.floor(Math.random() * 5)];
   let num = Math.floor(Math.random() * (den - 1)) + 1;
 
-  let decimal = Math.trunc(100000 * (num/den)) / 100000;
+  let decimal = Math.trunc(10000000 * (num/den)) / 10000000;
 
   problemContainer.innerHTML = `<p>(38) \\(${decimal}...\\) = ____ (proper fraction)</p>`;
   MathJax.typeset();
