@@ -64,20 +64,58 @@ function checkDecimalType(numerator, denominator) {
 }
 
 function terminateRepeatingDecimal(numerator, denominator) {
-  // 1. Get the full decimal string representation
-  const numStr = (numerator / denominator).toString();
-  
-  // 2. Regex looks for any digit (\d) that repeats immediately (\1+)
-  const match = numStr.match(/(\d)\1+/);
-  
-  if (match) {
-    // Find where the repeating sequence starts in the string
-    const repeatDigitIndex = numStr.indexOf(match[0]);
-    
-    // Slice up to the first repeating digit, plus 3 occurrences of it
-    return numStr.slice(0, repeatDigitIndex + 3);
+  if (denominator === 0) throw new Error("Denominator cannot be zero.");
+
+  const negative = (numerator < 0) !== (denominator < 0);
+  numerator = Math.abs(numerator);
+  denominator = Math.abs(denominator);
+
+  const integerPart = Math.floor(numerator / denominator);
+  let remainder = numerator % denominator;
+
+  if (remainder === 0) {
+    return `${negative ? "-" : ""}${integerPart}`;
   }
+
+  const digits = [];
+  const seenRemainders = new Map();
+
+  while (remainder !== 0 && !seenRemainders.has(remainder)) {
+    seenRemainders.set(remainder, digits.length);
+    remainder *= 10;
+    digits.push(Math.floor(remainder / denominator));
+    remainder %= denominator;
+  }
+
+  const decimalDigits = digits.join("");
+  const repeatingStart = seenRemainders.get(remainder) ?? 0;
+  const nonRepeatingPart = decimalDigits.slice(0, repeatingStart);
+  const repeatingPart = decimalDigits.slice(repeatingStart);
+
+  if (remainder === 0) {
+    return `${negative ? "-" : ""}${integerPart}`;
+  }
+
+  if (repeatingPart.length > 5) {
+    return `${negative ? "-" : ""}${integerPart}.${nonRepeatingPart}${repeatingPart}`;
+  }
+
+  let decimalExpansion = `${nonRepeatingPart}${repeatingPart}`;
+  while (decimalExpansion.length < 5) {
+    decimalExpansion += repeatingPart;
+  }
+
+  return `${negative ? "-" : ""}${integerPart}.${decimalExpansion.slice(0, 5)}`;
+}
+
+function decimalFormat(answer) { //removes 0 before a decimal if answer is between -1 and 1
+  let array = answer.toString().split('.');
+  let newAnswer = '';
   
-  // Return original if no repeating digits are found
-  return numStr; 
+  if (array[0] === '0' || array[0] === '-0') {
+    newAnswer = array[0] === '0' ? '.' + array[1] : '-.' + array[1];
+    return newAnswer;
+  }
+
+  return answer;
 }
