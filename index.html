@@ -3,9 +3,13 @@
   <head>
     <title>NS Practice</title>
 
-    <link rel="stylesheet" href="ns-practice-styles.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/14.8.1/math.js"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
 
     <script>
       math.config({
@@ -15,88 +19,81 @@
     </script>
   </head>
   <body>
-    <div class="left-panel">
-      <button class="left-panel-button" onclick="
-        togglePage('rp-welcome-page');
+    <div class="sidebar">
+      <button class="sidebar-button" onclick="
+        togglePage('welcome-page');
         ">Home
       </button>
-      <button class="left-panel-button" onclick="
-        togglePage('rp-skills-page');
-        ">Skills
+      <button class="sidebar-button" onclick="
+        togglePage('practice-page');
+        ">Practice
       </button>
-      <button class="left-panel-button" onclick="
-        togglePage('rp-tricks-page');
-        ">Tricks
-      </button>
-      <button class="left-panel-button" onclick="
-        togglePage('rp-test-page');
+      <button class="sidebar-button" onclick="
+        togglePage('test-page');
         ">Test
       </button>
     </div>
-    <div class="right-panel">
+    <div class="content-container">
       <!-- #region Broad Container Pages -->
-      <div class="rp-welcome-page page">
-        <p>Welcome</p>
-      </div>
-      <div class="rp-skills-page page hidden">
-        <p class="rp-skills-title">
-          Skills
+      <div id="welcome-page" class="page active">
+        <p class="rp-title">Welcome</p>
+        <p class="website-information">
+          New Additions:<br>
+          - new color and styling<br>
+          - combined skills and tricks into practice<br>
+          - search bar in practice<br>
+          - some new stuff in practice<br>
+          - added skip button to test<br>
         </p>
-        <div class="rp-skills-buttons">
-          <div class="rp-skills-buttons-leftColumn">
-            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('fractionSimplifying', 'Fraction Simplification')">
-              Fraction Simplification
-            </button>
-            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('decimalToFraction', 'Decimal to Fraction')">
-              Decimal to Fraction
-            </button>
-          </div>
-          <div class="rp-skills-buttons-rightColumn">
-            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('squaresCubes', 'Squares and Cubes')">
-              Squares and Cubes
-            </button>
-            <button class="rp-skills-buttons-style" onclick="toggleSkillPage('addSubtractManyNumbers', 'Adding/Subtracting many numbers')">
-              Adding/Subtracting many numbers
-            </button>
-          </div>
+      </div>
+      <div id="practice-page" class="page">
+        <input id="search-bar" class="search" type="search" placeholder="Search">
+        <p class="rp-title">Practice</p>
+        <div class="rp-buttons-container">
+          <button class="rp-button" onclick="togglePracticePage('fractionSimplifying', 'Simplifying Fractions')">
+            Simplifying Fractions
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('decimalToFraction', 'Convert Decimal -> Fraction')">
+            Convert Decimal -> Fraction
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('squaresCubes', 'Squares and Cubes')">
+            Squares and Cubes
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('addSubtractNumbers', 'Adding/Subtracting Numbers')">
+            Adding/Subtracting Numbers
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('cubicRootABC', 'Sum of Cubic Roots ([a+b][b+c][c+a])', 'cubicRootABC_explanation')">
+            Sum of Cubic Roots ([a+b][b+c][c+a])
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('doubleIntegralAddSubtract', 'Add/Subtract Double Integral', 'doubleIntegralAddSubtract_explanation')">
+            Add/Subtract Double Integrals
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('determinant3x3', 'Determinant of 3x3 Matrix', 'determinant3x3_explanation')">
+            Determinant of 3x3 Matrix
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('convertingBases', 'Converting Bases')">
+            Converting Bases
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('dividingBases', 'Finding Remainder When Dividing Bases')">
+            Finding Remainder When Dividing Bases
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('den90fraction', 'Fractions with denominators of 99, 999, 90, 990, or 900')">
+            Fractions with denominators of 99, 999, 90, 990, or 900
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('multiplication3x2', '3 by 2 Multiplication')">
+            3 by 2 Multiplication
+          </button>
+          <button class="rp-button" onclick="togglePracticePage('estimateMultiplicationAndDivision', 'Multiplication and Division Estimation')">
+            Multiplication and Division Estimation
+          </button>
         </div>
       </div>
-      <div class="rp-tricks-page page hidden">
-        <p class="rp-tricks-title">
-          Tricks
-        </p>
-        <div class="rp-tricks-buttons">
-          <div class="rp-tricks-buttons-leftColumn">
-            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('cubicRootABC', 'Cubic Root ([a+b][b+c][c+a])')">
-              Cubic Root ([a+b][b+c][c+a])
-            </button>
-            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('doubleIntegralAddSubtract', 'Double Integral Add/Subtract')">
-              Double Integral Add/Subtract
-            </button>
-          </div>
-          <div class="rp-tricks-buttons-rightColumn">
-            <button class="rp-tricks-buttons-style" onclick="toggleTrickPage('determinant3x3', 'Determinant of 3x3 Matrix')">
-              Determinant of 3x3 Matrix
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="rp-test-page page hidden">
-        <p class="rp-test-title">Test</p>
-        <div class="rp-test-buttons">
-          <div class="rp-test-buttons-leftColumn">
-            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-custom-intro')">
-              Custom Test
-            </button>
-            <button class="rp-test-buttons-style" onclick="togglePage(`tests-questions-11-20`)">
-              Questions 11-20
-            </button>
-          </div>
-          <div class="rp-test-buttons-rightColumn">
-            <button class="rp-test-buttons-style" onclick="togglePage('tests-questions-1-10')">
-              Questions 1-10
-            </button>
-          </div>
+      <div id="test-page" class="page">
+        <p class="rp-title">Test</p>
+        <div class="rp-buttons-container">
+          <button class="rp-button" onclick="togglePage('test-questions-intro-page')">
+            Custom Test
+          </button>
         </div>
         
       </div>
@@ -104,126 +101,31 @@
 
       
 
-      <!-- #region Skills Individual Pages-->
-      <!--
-      <div class="skillPage skills-fractionSimpl page hidden">
-        <p>Fraction Simplification</p>
-        <div class="skill-generator-container fractionSimpl-generator-container">
-          <math>
-            <mfrac class="fractionSimpl-frac">
-              <mn class="fractionSimpl-ftop"></mn>
-              <mi class="fractionSimpl-fbottom"></mi>
-            </mfrac>
-          </math>
-        </div>
-        <input class="skill-search-bar fractionSimpl-search-bar" placeholder="Enter">
-        <button class="skill-start-button fractionSimpl-start-button" onclick="
-          swapStartStop('fractionSimpl-start-button');
-          fractionSimplifying();
+      <!-- #region Practice Individual Page-->
+      <div id="practice-individual-page" class="individual-page page">
+        <p id="practice-title" data-question="" class="title"></p>
+        <div id="practice-problem-container" class="problem-container"></div>
+        <input id="practice-input" class="input" placeholder="Enter">
+        <button id="practice-start-button" class="start-button" onclick="
+          swapStartStop('practice-start-button');
+          let practiceName = document.getElementById('practice-title').getAttribute('data-question');
+          practiceMaker(practiceName);
           ">Start
         </button>
-      </div>
-      <div/ class="skillPage skills-squaresCubes page hidden">
-        <p>Squares and Cubes</p>
-        <div class="skill-generator-container squaresCubes-generator-container"></div>
-        <input class="skill-search-bar squaresCubes-search-bar" placeholder="Enter">
-        <button class="skill-start-button squaresCubes-start-button" onclick="
-          swapStartStop('squaresCubes-start-button');
-          squaresCubes();
-          ">Start
-        </button>
-      </div>
-      <div class="skillPage skills-decimalToFraction page hidden">
-        <p>Decimal to Fraction</p>
-        <div class="skill-generator-container decimalToFraction-generator-container"></div>
-        <input class="skill-search-bar decimalToFraction-search-bar" placeholder="Enter">
-        <button class="skill-start-button decimalToFraction-start-button" onclick="
-          swapStartStop('decimalToFraction-start-button');
-          decimalToFraction();
-          ">Start
-        </button>
-      </div>
-      <div class="skillPage skills-addSubtractManyNumbers page hidden">
-        <p>Adding/Subtracting many numbers</p>
-        <div class="skill-generator-container addSubtractManyNumbers-generator-container"></div>
-        <input class="skill-search-bar addSubtractManyNumbers-search-bar" placeholder="Enter">
-        <button class="skill-start-button addSubtractManyNumbers-start-button" onclick="
-          swapStartStop('addSubtractManyNumbers-start-button');
-          addSubtractManyNumbers();
-          ">Start
-        </button>
-      </div>
-      -->
-      <div class="skillPage page hidden">
-        <p data-question="" class="skill-title"></p>
-        <div class="skill-generator-container"></div>
-        <input class="skill-search-bar" placeholder="Enter">
-        <button class="skill-start-button" onclick="
-          swapStartStop('skill-start-button');
-          let skillName = document.querySelector('.skill-title').getAttribute('data-question');
-          window[skillName]();
-          ">Start
-        </button>
-      </div>
-
-      <!-- #endregion -->
-
-      <!-- #region Tricks Individual Pages-->
-      <!--
-      <div class="trickPage tricks-cubicRootABC page hidden">
-        <p>Cubic Root ([a+b][b+c][c+a])</p>
-        <div class="trick-generator-container cubicRootABC-generator-container"></div>
-        <input class="trick-search-bar cubicRootABC-search-bar" placeholder="Enter">
-        <button class="trick-start-button cubicRootABC-start-button" onclick="
-          swapStartStop('cubicRootABC-start-button');
-          cubicRootABC();
-          ">Start
-        </button>
-      </div>
-      <div class="trickPage tricks-determinant3x3 page hidden">
-        <p>Determinant of 3x3 Matrix</p>
-        <div class="trick-generator-container determinant3x3-generator-container"></div>
-        <input class="trick-search-bar determinant3x3-search-bar" placeholder="Enter">
-        <button class="trick-start-button determinant3x3-start-button" onclick="
-          swapStartStop('determinant3x3-start-button');
-          determinant3x3();
-          ">Start
-        </button>
-      </div>
-      <div class="trickPage tricks-doubleIntegralAddSubtract page hidden">
-        <p>Double Integral Add/Subtract</p>
-        <div class="trick-generator-container doubleIntegralAddSubtract-generator-container"></div>
-        <input class="trick-search-bar doubleIntegralAddSubtract-search-bar" placeholder="Enter">
-        <button class="trick-start-button doubleIntegralAddSubtract-start-button" onclick="
-          swapStartStop('doubleIntegralAddSubtract-start-button');
-          doubleIntegralAddSubtract();
-          ">Start
-        </button>
-      </div>
-      -->
-      <div class="trickPage page hidden">
-        <p data-question="" class="trick-title"></p>
-        <div class="trick-generator-container"></div>
-        <input class="trick-search-bar" placeholder="Enter">
-        <button class="trick-start-button" onclick="
-          swapStartStop('trick-start-button');
-          let trickName = document.querySelector('.trick-title').getAttribute('data-question');
-          window[trickName]();
-          ">Start
-        </button>
+        <p id="question-explanation" class="explanation"></p>
       </div>
       <!-- #endregion -->
       
-      <!-- #region Test Individual Pages -->
-      <div class="testPage tests-questions-custom-intro page hidden">
+      <!-- #region Test Individual Page -->
+      <div id="test-questions-intro-page" class="individual-page page">
         <p>Custom Test</p>
         <p>Enter the starting question number:</p>
-        <input class="test-search-bar" placeholder="Enter">
+        <input id="test-starting-number" class="input" placeholder="Enter">
         <p>Enter the ending question number:</p>
-        <input class="test-search-bar" placeholder="Enter">
-        <button class="test-start-button" onclick="
-          let min = parseInt(document.querySelector('.tests-questions-custom-intro input:nth-of-type(1)').value);
-          let max = parseInt(document.querySelector('.tests-questions-custom-intro input:nth-of-type(2)').value);
+        <input id="test-ending-number" class="input" placeholder="Enter">
+        <button class="start-button" onclick="
+          let min = parseInt(document.getElementById('test-starting-number').value);
+          let max = parseInt(document.getElementById('test-ending-number').value);
           if (isNaN(min) || isNaN(max) || min < 1 || max > functionArray.length || min > max) {
             alert('Please enter valid question numbers between 1 and ' + functionArray.length);
             return;
@@ -232,39 +134,24 @@
           ">Start
         </button>
       </div>
-      <div class="testPage tests-questions-custom page hidden">
-        <p class="custom-test-title">Custom Test</p>
-        <div class="test-generator-container questions-custom-generator-container"></div>
-        <input class="test-search-bar questions-custom-search-bar" placeholder="Enter">
-        <button class="test-start-button questions-custom-start-button"
-          >Start
-        </button>
-        <button class="back" onclick="
-          if (document.querySelector('.questions-custom-start-button').textContent === 'Stop') {
-            document.querySelector('.questions-custom-start-button').click();
+      <div id="test-questions-page" class="individual-page page">
+        <p id="test-title" class="title">Custom Test</p>
+        <div id="test-problem-container" class="problem-container"></div>
+        <input id="test-input" class="input" placeholder="Enter">
+        <div id="test-start-and-skip" class="start-and-skip-container">
+          <button id="test-start-button" class="start-button">
+            Start
+          </button>
+          <button id="test-skip-button" class="skip-button">
+            Skip
+          </button>
+        </div>
+        <button id="test-back" class="back" onclick="
+          if (document.getElementById('test-start-button').textContent === 'Stop') {
+            document.getElementById('test-start-button').click();
           }
-          togglePage('tests-questions-custom-intro');
+          togglePage('test-questions-intro-page');
           ">Back
-        </button>
-      </div>
-      <div class="testPage tests-questions-1-10 page hidden">
-        <p>Questions 1-10</p>
-        <div class="test-generator-container questions-1-10-generator-container"></div>
-        <input class="test-search-bar questions-1-10-search-bar" placeholder="Enter">
-        <button class="test-start-button questions-1-10-start-button" onclick="
-          swapStartStop('questions-1-10-start-button');
-          testMaker(1, 10, 'questions-1-10-generator-container', 'questions-1-10-search-bar', 'questions-1-10-start-button');
-          ">Start
-        </button>
-      </div>
-      <div class="testPage tests-questions-11-20 page hidden">
-        <p>Questions 11-20</p>
-        <div class="test-generator-container questions-11-20-generator-container"></div>
-        <input class="test-search-bar questions-11-20-search-bar" placeholder="Enter">
-        <button class="test-start-button questions-11-20-start-button" onclick="
-          swapStartStop('questions-11-20-start-button');
-          testMaker(11, 20, 'questions-11-20-generator-container', 'questions-11-20-search-bar', 'questions-11-20-start-button');
-          ">Start
         </button>
       </div>
       <!-- #endregion -->
@@ -272,10 +159,9 @@
 
 
     
-    <script src="ns-practice-layout.js"></script>
-    <script src="ns-practice-helper.js"></script>
-    <script src="ns-practice-skills.js"></script>
-    <script src="ns-practice-tricks.js"></script>
-    <script src="ns-practice-test.js"></script>
+    <script src="layout.js"></script>
+    <script src="helper.js"></script>
+    <script src="practice.js"></script>
+    <script src="test.js"></script>
   </body>
 </html>
